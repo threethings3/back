@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class UserException extends RuntimeException{
-    private final UserErrorResult errorResult;
+public class UserException extends RuntimeException {
+	private final UserErrorResult errorResult;
 }

@@ -6,22 +6,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.threethings.api.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerAdviceTest {
-    @Mock
-    UserService userService;
+	@Mock
+	UserService userService;
 
-    @InjectMocks
-    UserController userController;
+	@InjectMocks
+	UserController userController;
 
-    private MockMvc mockMvc;
+	private MockMvc mockMvc;
 
-    @BeforeEach
-    void init(){
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice()
-    }
+	@BeforeEach
+	void init() {
+	}
 }
