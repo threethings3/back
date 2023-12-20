@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.24">
+<file name="D:\IdeaProjects\threethings-server\src\test\java\com\threethings\api\ThreethingsApplicationTests.java">
+</file>
+<file name="D:\IdeaProjects\threethings-server\src\test\java\com\threethings\api\user\controller\UserControllerAdviceTest.java">
+</file>
+<file name="D:\IdeaProjects\threethings-server\src\test\java\com\threethings\api\user\controller\UserControllerIntegrationTest.java">
+</file>
+<file name="D:\IdeaProjects\threethings-server\src\test\java\com\threethings\api\user\controller\UserControllerUnitTest.java">
+</file>
+<file name="D:\IdeaProjects\threethings-server\src\test\java\com\threethings\api\user\repository\UserRepositoryTest.java">
+</file>
+</checkstyle>

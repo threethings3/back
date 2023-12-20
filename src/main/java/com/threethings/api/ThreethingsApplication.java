@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class ThreethingsApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(ThreethingsApplication.class, args);
-    }
-
+	public static void main(String[] args) {
+		SpringApplication.run(ThreethingsApplication.class, args);
+	}
 }
