@@ -5,6 +5,9 @@ plugins {
 
     // CheckStyle 플러그인 설정
     id 'checkstyle'
+
+    // Jacoco 설정
+    id 'jacoco'
 }
 
 
@@ -15,6 +18,53 @@ checkstyle {
     toolVersion = "8.24"
 }
 
+
+jacoco {
+    toolVersion = '0.8.10'
+}
+
+
+test {
+    // finalizedBy : 이(test) 작업에 대해 주어진 종료자 작업을 추가
+    finalizedBy jacocoTestReport // test 작업이 끝나고 jacocoTestReport를 실행
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    // dependsOn : 이 작업에 지정된 종속성을 추가
+    dependsOn test // jacocoTestReport 에 test라는 종속성을 추가
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true;
+            element = 'CLASS'
+
+            // 브랜치 커버리지를 최소한 50% 만족시켜야 합니다.
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.50
+            }
+
+            // 라인 커버리지를 최소한 50% 만족시켜야 합니다.
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.50
+            }
+
+            // 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한합니다.
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 200
+            }
+        }
+    }
+}
 
 group = 'threethings'
 version = '0.0.1-SNAPSHOT'
@@ -37,13 +87,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-}
 
-tasks.named('test') {
-    useJUnitPlatform()
+    // jwt token
+    implementation('io.jsonwebtoken:jjwt-api:0.11.5')
+    implementation('io.jsonwebtoken:jjwt-impl:0.11.5')
+    implementation('io.jsonwebtoken:jjwt-jackson:0.11.5')
+
+    // validation
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+
 }
