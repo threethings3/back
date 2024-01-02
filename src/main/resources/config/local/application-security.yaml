@@ -1,0 +1,5 @@
+# local jwt
+jwt:
+  key:
+    access: TE9DQUxfSldUX0FDQ0VTU19UT0tFTl9TRUNSRVRfS0VZ
+  access-token-validity-in-seconds: 1800
