@@ -2,13 +2,18 @@ package com.threethings.api.member.domain;
 
 import com.threethings.api.global.common.DocsEnumType;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum Provider implements DocsEnumType {
-	NAVER("N"), KAKAO("K"), GOOGLE("G");
+@Getter
+public enum AgeGroup implements DocsEnumType {
+	TEENS(1),
+	TWENTIES(2),
+	THIRTIES(3),
+	FORTIES_AND_ABOVE(4);
 
-	private final String code;
+	private final int code;
 
 	@Override
 	public String getName() {
@@ -17,6 +22,6 @@ public enum Provider implements DocsEnumType {
 
 	@Override
 	public String getDescription() {
-		return this.code;
+		return String.valueOf(this.code);
 	}
 }

@@ -1,0 +1,5 @@
+:doctype: book
+:icons: font
+
+[[Gender]]
+include::{snippets}/enum-controller-test/enums/custom-response-fields-ageGroup.adoc[]

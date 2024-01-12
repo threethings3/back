@@ -1,0 +1,12 @@
+[[Member-API]]
+== Member API
+
+[[Member-회원-가입]]
+=== Member 회원 가입
+
+operation::member-sign-controller-integration-test/sign-up[snippets='http-request,request-fields,http-response,response-headers,response-fields']
+
+[[Member-로그인]]
+=== Member 로그인
+
+operation::member-sign-controller-integration-test/sign-in[snippets='http-request,request-fields,http-response,response-fields']
