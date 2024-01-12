@@ -8,63 +8,26 @@ plugins {
 
     // Jacoco 설정
     id 'jacoco'
+
+    // Asciidoctor 플러그인
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
-
-checkstyle {
-    maxWarnings = 0 // 규칙이 어긋나는 코드가 하나로도 있을 경우 빌드 fail
-    configFile = file("${rootDir}/naver-checkstyle-rules.xml")
-    configProperties = ["suppressionFile": "${rootDir}/naver-checkstyle-suppression.xml"]
-    toolVersion = "8.24"
-}
-
-
-jacoco {
-    toolVersion = '0.8.10'
-}
-
+apply from: 'scripts/checkstyle.gradle'
+apply from: 'scripts/jacoco.gradle'
+apply from: 'scripts/restdocs.gradle'
 
 test {
+    outputs.dir snippetsDir
     // finalizedBy : 이(test) 작업에 대해 주어진 종료자 작업을 추가
     finalizedBy jacocoTestReport // test 작업이 끝나고 jacocoTestReport를 실행
     useJUnitPlatform()
 }
 
-jacocoTestReport {
-    // dependsOn : 이 작업에 지정된 종속성을 추가
-    dependsOn test // jacocoTestReport 에 test라는 종속성을 추가
-    finalizedBy 'jacocoTestCoverageVerification'
+build {
+    dependsOn copyDocument
 }
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            enabled = true;
-            element = 'CLASS'
-
-            // 브랜치 커버리지를 최소한 50% 만족시켜야 합니다.
-            limit {
-                counter = 'BRANCH'
-                value = 'COVEREDRATIO'
-                minimum = 0.50
-            }
-
-            // 라인 커버리지를 최소한 50% 만족시켜야 합니다.
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.50
-            }
-
-            // 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한합니다.
-            limit {
-                counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 200
-            }
-        }
-    }
-}
 
 group = 'threethings'
 version = '0.0.1-SNAPSHOT'
@@ -74,6 +37,7 @@ java {
 }
 
 configurations {
+    asciidoctorExtensions
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -92,6 +56,8 @@ dependencies {
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -103,6 +69,10 @@ dependencies {
 
     // validation
     implementation('org.springframework.boot:spring-boot-starter-validation')
+
+    // spring rest docs
+    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     runtimeOnly 'com.h2database:h2'
 
