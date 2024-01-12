@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtHandler {
 	private static final String TYPE = "Bearer ";
 
-	public String generateToken(Key key, Map<String, Object> privateClaims, long maxAgeSeconds) {
+	public String createToken(Key key, Map<String, Object> privateClaims, long maxAgeSeconds) {
 		Date now = new Date();
 		return TYPE + Jwts.builder()
 			.setHeaderParam("typ", "JWT")

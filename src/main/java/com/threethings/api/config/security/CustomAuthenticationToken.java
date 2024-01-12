@@ -8,11 +8,12 @@ import org.springframework.security.core.GrantedAuthority;
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
 	private CustomUserDetails principal;
 
-	public CustomAuthenticationToken(CustomUserDetails principal, Collection<? extends GrantedAuthority> authorities){
+	public CustomAuthenticationToken(CustomUserDetails principal, Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
 		this.principal = principal;
 		setAuthenticated(true);
 	}
+
 	@Override
 	public Object getCredentials() {
 		return new UnsupportedOperationException();
