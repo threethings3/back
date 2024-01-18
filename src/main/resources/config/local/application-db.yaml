@@ -8,7 +8,7 @@ spring:
       path: /h2-console
   datasource:
     username: sa
-    url: jdbc:h2:tcp://localhost/~/threethings
+    url: jdbc:h2:~/threethings
     driverClassName: org.h2.Driver
     password: ''
   jpa:

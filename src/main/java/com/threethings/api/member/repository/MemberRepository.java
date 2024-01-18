@@ -8,10 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.threethings.api.member.domain.Member;
+import com.threethings.api.member.domain.Provider;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Optional<Member> findByNickname(String nickname);
+
+	Optional<Member> findBySocialCodeAndProvider(String socialCode, Provider provider);
 
 	@EntityGraph(attributePaths = "roleSet")
 	@Query("select m from Member m where m.id= :id")
@@ -19,3 +22,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	boolean existsByNickname(@Param("nickname") String nickname);
 }
+

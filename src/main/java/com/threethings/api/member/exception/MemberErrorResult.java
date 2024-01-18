@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum MemberErrorResult {
 	MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, -1000, "Member Not Found"),
-	NICKNAME_IS_DUPLICATED(HttpStatus.BAD_REQUEST, -1001, "Nickname Is Duplicated");
+	NICKNAME_IS_EXIST(HttpStatus.CONFLICT, -1001, "Nickname Is Duplicated");
 
 	private final HttpStatus httpStatus;
 	private final int code;

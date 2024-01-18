@@ -11,7 +11,10 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+.gradle/**
 build/**
+
 # AWS User-specific
 .idea/**/aws.xml
 
@@ -126,7 +129,7 @@ fabric.properties
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+.gradle/**
 # Package Files #
 *.jar
 *.war

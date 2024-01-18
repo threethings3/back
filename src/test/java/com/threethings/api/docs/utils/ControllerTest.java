@@ -1,0 +1,25 @@
+package com.threethings.api.docs.utils;
+
+import org.junit.jupiter.api.Disabled;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Disabled
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+public class ControllerTest {
+	@Autowired
+	protected ObjectMapper objectMapper;
+
+	@Autowired
+	protected MockMvc mockMvc;
+
+	protected String createJson(Object dto) throws JsonProcessingException {
+		return objectMapper.writeValueAsString(dto);
+	}
+}
