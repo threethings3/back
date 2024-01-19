@@ -1,9 +1,11 @@
 package com.threethings.api.member.domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.threethings.api.challenge.domain.ChallengeCategory;
+import com.threethings.api.challenge_member.domain.ChallengeMember;
 import com.threethings.api.global.common.BaseEntity;
 import com.threethings.api.member.converter.ProviderConverter;
 
@@ -17,6 +19,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,10 +54,12 @@ public class Member extends BaseEntity {
 
 	private Long profileImageId;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+	private List<ChallengeMember> challengeMemberList;
+
 	@Builder
 	public Member(String nickname, String socialCode, Provider provider,
-		Set<ChallengeCategory> favoriteChallengeCategories,
-		Long profileImageId) {
+		Set<ChallengeCategory> favoriteChallengeCategories, Long profileImageId) {
 		this.nickname = nickname;
 		this.socialCode = socialCode;
 		this.provider = provider;
@@ -71,4 +76,5 @@ public class Member extends BaseEntity {
 		this.favoriteChallengeCategories.clear();
 		this.favoriteChallengeCategories.addAll(newCategories);
 	}
+
 }
