@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.threethings.api.global.GlobalExceptionHandler;
 import com.threethings.api.member.controller.MemberSignController;
 import com.threethings.api.member.dto.SignInRequest;
@@ -34,7 +34,7 @@ public class MemberSignControllerAdviceTest {
 
 	MockMvc mockMvc;
 
-	ObjectMapper objectMapper = new ObjectMapper();
+	Gson gson = new Gson();
 
 	@BeforeEach
 	void init() {
@@ -55,7 +55,7 @@ public class MemberSignControllerAdviceTest {
 		mockMvc.perform(
 				MockMvcRequestBuilders.post(url)
 					.contentType(MediaType.APPLICATION_JSON)
-					.content(objectMapper.writeValueAsString(req)))
+					.content(gson.toJson(req)))
 			.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.code").value(-1000))
 			.andExpect(jsonPath("$.result.msg").value("Member Not Found"));

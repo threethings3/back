@@ -1,10 +1,8 @@
 package com.threethings.api.member.controller;
 
 import static org.mockito.BDDMockito.*;
-import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.net.URLEncoder;
@@ -17,17 +15,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.threethings.api.member.domain.Provider;
 import com.threethings.api.member.dto.SignInRequest;
 import com.threethings.api.member.dto.SignUpRequest;
@@ -45,7 +41,7 @@ class MemberSignControllerUnitTest {
 
 	MockMvc mockMvc;
 
-	ObjectMapper objectMapper = new ObjectMapper();
+	Gson gson = new Gson();
 
 	@BeforeEach
 	void beforeEach(RestDocumentationContextProvider provider) {
@@ -69,7 +65,7 @@ class MemberSignControllerUnitTest {
 		// when
 		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post(url)
 			.contentType(MediaType.APPLICATION_JSON)
-			.content(objectMapper.writeValueAsString(req)));
+			.content(gson.toJson(req)));
 
 		// then
 		resultActions.andExpect(status().isCreated())
@@ -92,7 +88,7 @@ class MemberSignControllerUnitTest {
 		final ResultActions resultActions = mockMvc.perform(
 			MockMvcRequestBuilders.post(url)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(req))
+				.content(gson.toJson(req))
 		);
 
 		// then

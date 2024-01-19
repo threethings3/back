@@ -47,7 +47,7 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 		// when
 		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post(url)
 			.contentType(MediaType.APPLICATION_JSON)
-			.content(objectMapper.writeValueAsString(req)));
+			.content(gson.toJson(req)));
 
 		// then
 		resultActions.andExpect(status().isCreated())
@@ -94,7 +94,7 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 		final ResultActions resultActions = mockMvc.perform(
 			MockMvcRequestBuilders.post(url)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(req))
+				.content(gson.toJson(req))
 		);
 
 		// then
