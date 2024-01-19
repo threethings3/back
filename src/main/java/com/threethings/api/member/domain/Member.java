@@ -5,8 +5,6 @@ import java.util.Set;
 
 import com.threethings.api.challenge.domain.ChallengeCategory;
 import com.threethings.api.global.common.BaseEntity;
-import com.threethings.api.member.converter.AgeGroupConverter;
-import com.threethings.api.member.converter.GenderConverter;
 import com.threethings.api.member.converter.ProviderConverter;
 
 import jakarta.persistence.Column;
@@ -53,23 +51,15 @@ public class Member extends BaseEntity {
 
 	private Long profileImageId;
 
-	@Convert(converter = AgeGroupConverter.class)
-	private AgeGroup ageGroup;
-
-	@Convert(converter = GenderConverter.class)
-	private Gender gender;
-
 	@Builder
 	public Member(String nickname, String socialCode, Provider provider,
 		Set<ChallengeCategory> favoriteChallengeCategories,
-		Long profileImageId, AgeGroup ageGroup, Gender gender) {
+		Long profileImageId) {
 		this.nickname = nickname;
 		this.socialCode = socialCode;
 		this.provider = provider;
 		addFavoriteChallengeCategories(favoriteChallengeCategories);
 		this.profileImageId = profileImageId;
-		this.ageGroup = ageGroup;
-		this.gender = gender;
 		addRole(MemberRole.ROLE_NORMAL);
 	}
 

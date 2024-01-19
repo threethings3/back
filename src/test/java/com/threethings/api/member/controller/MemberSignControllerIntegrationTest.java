@@ -64,9 +64,8 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 							.description("link:common/Provider.html[OAuth2 리소스 서버,role=\"popup\"]"),
 						fieldWithPath("nickname").description("닉네임"),
 						fieldWithPath("profileImageId").description("프로필 이미지 ID"),
-						fieldWithPath("ageGroup").description("연령대"),
-						fieldWithPath("gender").description("성별"),
 						fieldWithPath("favoriteChallengeCategories").description("선호 챌린지 카테고리")
+							.description("link:common/ChallengeCategory.html[선호 카테고리,role=\"popup\"]")
 					),
 					responseHeaders(
 						headerWithName(HttpHeaders.LOCATION).description("Location header")
@@ -78,10 +77,6 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 						fieldWithPath("result.data.memberResponse.nickname").description("닉네임"),
 						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories")
 							.description("link:common/ChallengeCategory.html[선호 카테고리,role=\"popup\"]"),
-						fieldWithPath("result.data.memberResponse.ageGroup")
-							.description("link:common/AgeGroup.html[연령대 ,role=\"popup\"]"),
-						fieldWithPath("result.data.memberResponse.gender")
-							.description("link:common/Gender.html[성별 ,role=\"popup\"]"),
 						fieldWithPath("result.data.tokenResponse.accessToken").description("Access token"),
 						fieldWithPath("result.data.tokenResponse.refreshToken").description("Refresh token"))
 				)
@@ -117,11 +112,8 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 						fieldWithPath("code").description("결과 코드"),
 						fieldWithPath("result.data.memberResponse.profileImageId").description("프로필 ID"),
 						fieldWithPath("result.data.memberResponse.nickname").description("닉네임"),
-						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories").description(
-							"선호 챌린지 카테고리"),
-						fieldWithPath("result.data.memberResponse.ageGroup").description("연령대"),
-						fieldWithPath("result.data.memberResponse.gender")
-							.description("link:common/Gender.html[상태 코드,role=\"popup\"]"),
+						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories")
+							.description("link:common/ChallengeCategory.html[선호 카테고리,role=\"popup\"]"),
 						fieldWithPath("result.data.tokenResponse.accessToken").description("Access token"),
 						fieldWithPath("result.data.tokenResponse.refreshToken").description("Refresh token"))
 				)

@@ -3,8 +3,6 @@ package com.threethings.api.member.dto;
 import java.util.Set;
 
 import com.threethings.api.challenge.domain.ChallengeCategory;
-import com.threethings.api.member.domain.AgeGroup;
-import com.threethings.api.member.domain.Gender;
 import com.threethings.api.member.domain.Member;
 import com.threethings.api.member.domain.Provider;
 
@@ -21,8 +19,6 @@ public class SignUpRequest {
 	private Provider provider;
 	private String nickname;
 	private Long profileImageId;
-	private AgeGroup ageGroup;
-	private Gender gender;
 	private Set<ChallengeCategory> favoriteChallengeCategories;
 
 	public static Member toEntity(SignUpRequest req) {
@@ -31,8 +27,6 @@ public class SignUpRequest {
 			.provider(req.getProvider())
 			.nickname(req.getNickname())
 			.profileImageId(req.profileImageId)
-			.ageGroup(req.getAgeGroup())
-			.gender(req.gender)
 			.favoriteChallengeCategories(req.getFavoriteChallengeCategories()).build();
 	}
 }

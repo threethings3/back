@@ -43,14 +43,6 @@ public class EnumControllerTest extends RestDocsTest {
 					attributes(key("title").value("ChallengeCategory")),
 					enumConvertFieldDescriptor((enumDocs.getChallengeCategory()))
 				),
-				customResponseFields("custom-response", beneathPath("data.ageGroup").withSubsectionId("ageGroup"),
-					attributes(key("title").value("AgeGroup")),
-					enumConvertFieldDescriptor((enumDocs.getAgeGroup()))
-				),
-				customResponseFields("custom-response", beneathPath("data.gender").withSubsectionId("gender"),
-					attributes(key("title").value("Gender")),
-					enumConvertFieldDescriptor((enumDocs.getGender()))
-				),
 				customResponseFields("custom-response", beneathPath("data.provider").withSubsectionId("provider"),
 					attributes(key("title").value("Provider")),
 					enumConvertFieldDescriptor((enumDocs.getProvider()))
