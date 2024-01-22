@@ -1,6 +1,5 @@
 package com.threethings.api.challenge.dto;
 
-import java.time.DayOfWeek;
 import java.util.List;
 
 import com.threethings.api.challenge.domain.CertificationTime;
@@ -32,15 +31,11 @@ public class ChallengeCreateRequestDto {
 			.title(req.getTitle())
 			.status(req.getStatus())
 			.certificationTime(req.getCertificationTime())
-			.cycleDays(req.getDayOfWeekList(req.cycleDays))
+			.cycleDays(req.cycleDays)
 			.challengePeriodWeeks(req.getChallengePeriodWeeks())
 			.isPublic(req.getIsPublic())
 			.maxParticipants(req.maxParticipants)
 			.build();
 	}
 
-	private List<DayOfWeek> getDayOfWeekList(List<Integer> values) {
-		values.sort(Integer::compare);
-		return values.stream().map(DayOfWeek::of).toList();
-	}
 }

@@ -1,6 +1,7 @@
 package com.threethings.api.challenge.facade;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.threethings.api.challenge.domain.Challenge;
 import com.threethings.api.challenge.dto.ChallengeCreateRequestDto;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChallengeFacade {
 	private final ChallengeService challengeService;
 	private final MemberService memberService;

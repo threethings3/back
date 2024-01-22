@@ -59,15 +59,15 @@ public class Challenge extends BaseEntity {
 	@Builder
 	public Challenge(ChallengeCategory challengeCategory, String title, Status status,
 		CertificationTime certificationTime,
-		List<DayOfWeek> cycleDays, Integer challengePeriodWeeks, Boolean isPublic, Integer maxParticipants) {
+		List<Integer> cycleDays, Integer challengePeriodWeeks, Boolean isPublic, Integer maxParticipants) {
 		this.challengeCategory = challengeCategory;
 		this.title = title;
 		this.status = status;
 		this.certificationTime = certificationTime;
-		this.cycleDays = cycleDays;
-		this.beginChallengeDate = calculateBeginDateTime(cycleDays, certificationTime,
+		this.cycleDays = getDayOfWeekList(cycleDays);
+		this.beginChallengeDate = calculateBeginDateTime(this.cycleDays, certificationTime,
 			SystemTimeProvider.getInstance());
-		this.endChallengeDate = calculateEndDateTime(beginChallengeDate, challengePeriodWeeks, cycleDays);
+		this.endChallengeDate = calculateEndDateTime(this.beginChallengeDate, challengePeriodWeeks, this.cycleDays);
 		this.isPublic = isPublic;
 		this.maxParticipants = maxParticipants;
 	}
@@ -99,6 +99,10 @@ public class Challenge extends BaseEntity {
 		int endIndex = (beginIndex - 1 + cycleDays.size()) % cycleDays.size();
 		return beginChallenge.with(TemporalAdjusters.next(cycleDays.get(endIndex)))
 			.plusWeeks(challengePeriodWeeks - 1);
+	}
+
+	private List<DayOfWeek> getDayOfWeekList(List<Integer> values) {
+		return values.stream().map(DayOfWeek::of).toList();
 	}
 
 	public void addMember(ChallengeMember member) {

@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.google.gson.Gson;
 
 @Disabled
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class ControllerTest {
 	@Autowired
@@ -17,4 +17,5 @@ public class ControllerTest {
 
 	@Autowired
 	protected MockMvc mockMvc;
+
 }

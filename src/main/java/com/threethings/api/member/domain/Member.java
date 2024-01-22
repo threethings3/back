@@ -1,5 +1,6 @@
 package com.threethings.api.member.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,7 +56,7 @@ public class Member extends BaseEntity {
 	private Long profileImageId;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
-	private List<ChallengeMember> challengeMemberList;
+	private List<ChallengeMember> challengeMemberList = new ArrayList<>();
 
 	@Builder
 	public Member(String nickname, String socialCode, Provider provider,

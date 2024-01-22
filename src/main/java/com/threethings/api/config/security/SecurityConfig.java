@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final CustomUserDetailsService userDetailsService;
-	private static final String[] WHITE_LIST = {"/api/sign-in", "/api/sign-up"};
+	private static final String[] WHITE_LIST = {"/api/sign-in", "/api/sign-up", "/test/enums"};
 
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,6 +32,7 @@ public class SecurityConfig {
 			.sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(authorize ->
 				authorize.requestMatchers(WHITE_LIST).permitAll()
+					.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
 					.requestMatchers(HttpMethod.POST, "/api/challenge").authenticated())
 			.addFilterBefore(new JwtAuthenticationFilter(userDetailsService),
 				UsernamePasswordAuthenticationFilter.class)
