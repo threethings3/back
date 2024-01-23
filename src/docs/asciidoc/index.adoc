@@ -9,3 +9,4 @@
 
 toc::[]
 include::Member-API.adoc[]
+include::Challenge-API.adoc[]

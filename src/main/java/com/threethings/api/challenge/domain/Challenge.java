@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.threethings.api.challenge.converter.ChallengeCategoryConverter;
 import com.threethings.api.challenge.converter.DaysOfWeekConverter;
-import com.threethings.api.challenge_member.domain.ChallengeMember;
+import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.global.common.BaseEntity;
 
 import jakarta.persistence.Convert;
@@ -41,7 +41,7 @@ public class Challenge extends BaseEntity {
 	private String title;
 
 	@Embedded
-	private Status status;
+	private Goal goal;
 
 	@Embedded
 	private CertificationTime certificationTime;
@@ -57,12 +57,12 @@ public class Challenge extends BaseEntity {
 	private List<ChallengeMember> members = new ArrayList<>();
 
 	@Builder
-	public Challenge(ChallengeCategory challengeCategory, String title, Status status,
+	public Challenge(ChallengeCategory challengeCategory, String title, Goal goal,
 		CertificationTime certificationTime,
 		List<Integer> cycleDays, Integer challengePeriodWeeks, Boolean isPublic, Integer maxParticipants) {
 		this.challengeCategory = challengeCategory;
 		this.title = title;
-		this.status = status;
+		this.goal = goal;
 		this.certificationTime = certificationTime;
 		this.cycleDays = getDayOfWeekList(cycleDays);
 		this.beginChallengeDate = calculateBeginDateTime(this.cycleDays, certificationTime,

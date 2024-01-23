@@ -2,5 +2,5 @@ checkstyle {
     maxWarnings = 0 // 규칙이 어긋나는 코드가 하나로도 있을 경우 빌드 fail
     configFile = file("${rootDir}/naver-checkstyle-rules.xml")
     configProperties = ["suppressionFile": "${rootDir}/naver-checkstyle-suppression.xml"]
-    toolVersion = "8.24"
+    toolVersion = "8.42"
 }

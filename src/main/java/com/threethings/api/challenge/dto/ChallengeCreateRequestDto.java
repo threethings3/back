@@ -5,7 +5,7 @@ import java.util.List;
 import com.threethings.api.challenge.domain.CertificationTime;
 import com.threethings.api.challenge.domain.Challenge;
 import com.threethings.api.challenge.domain.ChallengeCategory;
-import com.threethings.api.challenge.domain.Status;
+import com.threethings.api.challenge.domain.Goal;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class ChallengeCreateRequestDto {
 	private ChallengeCategory challengeCategory;
 	private String title;
-	private Status status;
+	private Goal goal;
 	private CertificationTime certificationTime;
 	private Integer challengePeriodWeeks;
 	private List<Integer> cycleDays;
@@ -29,7 +29,7 @@ public class ChallengeCreateRequestDto {
 		return Challenge.builder()
 			.challengeCategory(req.challengeCategory)
 			.title(req.getTitle())
-			.status(req.getStatus())
+			.goal(req.getGoal())
 			.certificationTime(req.getCertificationTime())
 			.cycleDays(req.cycleDays)
 			.challengePeriodWeeks(req.getChallengePeriodWeeks())

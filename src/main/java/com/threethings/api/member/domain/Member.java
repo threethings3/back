@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.threethings.api.challenge.domain.ChallengeCategory;
-import com.threethings.api.challenge_member.domain.ChallengeMember;
+import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.global.common.BaseEntity;
 import com.threethings.api.member.converter.ProviderConverter;
 

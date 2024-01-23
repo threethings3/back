@@ -1,0 +1,8 @@
+[[Challenge-API]]
+== Challenge API
+
+[[Challenge-생성]]
+=== Challenge-생성
+
+operation::challenge-controller-integration-test/create-challenge-test[snippets='http-request,request-fields,request-header,http-response,response-fields']
+

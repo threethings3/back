@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.threethings.api.challenge.dto.ChallengeCreateRequestDto;
 import com.threethings.api.challenge.factory.ChallengeCreateRequestFactory;
 import com.threethings.api.challenge.service.ChallengeService;
-import com.threethings.api.challenge_member.service.ChallengeMemberService;
+import com.threethings.api.challengemember.service.ChallengeMemberService;
 import com.threethings.api.member.factory.domain.MemberFactory;
 import com.threethings.api.member.service.MemberService;
 

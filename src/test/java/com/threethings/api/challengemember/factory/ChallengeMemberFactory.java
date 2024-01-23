@@ -1,7 +1,7 @@
-package com.threethings.api.challenge_member.factory;
+package com.threethings.api.challengemember.factory;
 
 import com.threethings.api.challenge.factory.ChallengeFactory;
-import com.threethings.api.challenge_member.domain.ChallengeMember;
+import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.member.factory.domain.MemberFactory;
 
 public class ChallengeMemberFactory {

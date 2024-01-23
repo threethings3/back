@@ -1,4 +1,4 @@
-package com.threethings.api.challenge_member.domain;
+package com.threethings.api.challengemember.domain;
 
 import lombok.RequiredArgsConstructor;
 
