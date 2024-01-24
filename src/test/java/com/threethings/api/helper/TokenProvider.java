@@ -1,26 +1,22 @@
 package com.threethings.api.helper;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.threethings.api.config.token.TokenHelper;
+import com.threethings.api.member.factory.dto.SignInRequestFactory;
+import com.threethings.api.member.service.SignService;
 
 @Component
 public class TokenProvider {
-	private static TokenHelper accessTokenHelper;
+	private static SignService signService;
 
 	@Autowired
-	public TokenProvider(TokenHelper accessTokenHelper) {
-		TokenProvider.accessTokenHelper = accessTokenHelper;
+	public TokenProvider(SignService signService) {
+		TokenProvider.signService = signService;
 	}
 
 	public static String getValidAccessToken() {
-		String memberId = "1";
-		List<String> roleTypes = List.of("NORMAL", "ADMIN");
-		TokenHelper.PrivateClaims privateClaims = new TokenHelper.PrivateClaims(memberId, roleTypes);
-		return accessTokenHelper.createToken(privateClaims);
+		return signService.signIn(SignInRequestFactory.createSignInRequest()).getTokenResponse().getAccessToken();
 	}
 
 	public static String getIncorrectSignatureToken() {

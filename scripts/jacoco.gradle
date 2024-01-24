@@ -11,7 +11,7 @@ jacocoTestReport {
 jacocoTestCoverageVerification {
     violationRules {
         rule {
-            enabled = false;
+            enabled = true;
             element = 'CLASS'
 
             // 브랜치 커버리지를 최소한 50% 만족시켜야 합니다.

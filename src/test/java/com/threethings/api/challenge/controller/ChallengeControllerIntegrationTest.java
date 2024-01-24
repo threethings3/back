@@ -6,26 +6,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.headers.HeaderDescriptor;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.threethings.api.challenge.dto.ChallengeCreateRequestDto;
 import com.threethings.api.challenge.factory.ChallengeCreateRequestFactory;
 import com.threethings.api.docs.utils.RestDocsTest;
 import com.threethings.api.helper.TokenProvider;
+import com.threethings.api.init.MemberTestInitDB;
 
+@Transactional
 public class ChallengeControllerIntegrationTest extends RestDocsTest {
+	@Autowired
+	MemberTestInitDB memberTestInitDB;
+
+	@BeforeEach
+	void initDB() {
+		memberTestInitDB.initDB();
+	}
 
 	@Test
 	@DisplayName("챌린지 생성 테스트 - POST /api/challenge")

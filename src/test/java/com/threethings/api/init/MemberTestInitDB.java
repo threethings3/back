@@ -33,7 +33,7 @@ public class MemberTestInitDB {
 		Member member2 = Member.builder()
 			.nickname("testMember2")
 			.provider(Provider.KAKAO)
-			.socialCode("87654321")
+			.socialCode("-12345678")
 			.profileImageId(2L)
 			.favoriteChallengeCategories(Set.of(ChallengeCategory.PET_CARE, ChallengeCategory.GROWTH)).build();
 

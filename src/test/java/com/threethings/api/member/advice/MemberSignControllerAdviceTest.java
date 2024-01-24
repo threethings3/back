@@ -48,7 +48,7 @@ public class MemberSignControllerAdviceTest {
 	void signInFailureExceptionTest() throws Exception {
 		// given
 		String url = "/api/sign-in";
-		SignInRequest req = SignInRequestFactory.createSignInRequestFactory();
+		SignInRequest req = SignInRequestFactory.createSignInRequest();
 		given(signService.signIn(any())).willThrow(new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
 
 		// when, then
