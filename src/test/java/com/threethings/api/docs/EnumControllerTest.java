@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gson.reflect.TypeToken;
 import com.threethings.api.docs.utils.CustomResponseFieldsSnippet;
 import com.threethings.api.docs.utils.RestDocsTest;
 
@@ -43,14 +43,6 @@ public class EnumControllerTest extends RestDocsTest {
 					attributes(key("title").value("ChallengeCategory")),
 					enumConvertFieldDescriptor((enumDocs.getChallengeCategory()))
 				),
-				customResponseFields("custom-response", beneathPath("data.ageGroup").withSubsectionId("ageGroup"),
-					attributes(key("title").value("AgeGroup")),
-					enumConvertFieldDescriptor((enumDocs.getAgeGroup()))
-				),
-				customResponseFields("custom-response", beneathPath("data.gender").withSubsectionId("gender"),
-					attributes(key("title").value("Gender")),
-					enumConvertFieldDescriptor((enumDocs.getGender()))
-				),
 				customResponseFields("custom-response", beneathPath("data.provider").withSubsectionId("provider"),
 					attributes(key("title").value("Provider")),
 					enumConvertFieldDescriptor((enumDocs.getProvider()))
@@ -75,11 +67,10 @@ public class EnumControllerTest extends RestDocsTest {
 
 	// mvc result 데이터 파싱
 	private EnumDocs getData(MvcResult result) throws IOException {
-		ApiResponseDto<EnumDocs> apiResponseDto = objectMapper
-			.readValue(result.getResponse().getContentAsByteArray(),
-				new TypeReference<>() {
-				}
-			);
+		ApiResponseDto<EnumDocs> apiResponseDto = gson.fromJson(result.getResponse().getContentAsString(),
+			new TypeToken<ApiResponseDto<EnumDocs>>() {
+			}.getType());
+
 		return apiResponseDto.getData();
 	}
 }

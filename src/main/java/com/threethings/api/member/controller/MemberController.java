@@ -11,7 +11,6 @@ import com.threethings.api.member.exception.MemberErrorResult;
 import com.threethings.api.member.exception.MemberException;
 import com.threethings.api.member.service.MemberService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,8 +20,8 @@ public class MemberController {
 	private final MemberService memberService;
 
 	@GetMapping("/nickname/{nickname}")
-	public ResponseEntity<Response> checkNickname(@PathVariable String nickname, HttpServletRequest request) {
-		if (memberService.isNicknameDuplicate(nickname)) {
+	public ResponseEntity<Response> checkNickname(@PathVariable String nickname) {
+		if (!memberService.isNicknameDuplicate(nickname)) {
 			return ResponseEntity.ok(Response.success());
 		} else {
 			throw new MemberException(MemberErrorResult.NICKNAME_IS_EXIST);

@@ -66,7 +66,7 @@ class SignServiceTest {
 	void signInTest() {
 		// given
 		Member member = MemberFactory.createMember();
-		SignInRequest req = SignInRequestFactory.createSignInRequestFactory();
+		SignInRequest req = SignInRequestFactory.createSignInRequest();
 		given(memberRepository.findBySocialCodeAndProvider(any(), any())).willReturn(Optional.of(member));
 		given(accessTokenHelper.createToken(any())).willReturn("access");
 		given(refreshTokenHelper.createToken(any())).willReturn("refresh");
