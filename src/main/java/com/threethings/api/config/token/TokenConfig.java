@@ -20,4 +20,13 @@ public class TokenConfig {
 		byte[] secretKeyBytes = Decoders.BASE64.decode(key);
 		return new TokenHelper(jwtHandler, Keys.hmacShaKeyFor(secretKeyBytes), maxAgeSeconds);
 	}
+
+	@Bean
+	public TokenHelper refreshTokenHelper(
+		@Value("${jwt.key.refresh}") String key,
+		@Value("${jwt.refresh-token-validity-in-seconds}") long maxAgeSeconds) {
+		byte[] secretKeyBytes = Decoders.BASE64.decode(key);
+		return new TokenHelper(jwtHandler, Keys.hmacShaKeyFor(secretKeyBytes), maxAgeSeconds);
+	}
 }
+

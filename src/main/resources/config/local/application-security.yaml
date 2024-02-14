@@ -2,4 +2,6 @@
 jwt:
   key:
     access: TE9DQUxfSldUX0FDQ0VTU19UT0tFTl9TRUNSRVRfS0VZ
-  access-token-validity-in-seconds: 1800
+    refresh: TE9DQUxfSldUX1JFRlJFU0hfVE9LRU5fU0VDUkVUX0tFWQ==
+  access-token-validity-in-seconds: 1800 # 30분
+  refresh-token-validity-in-seconds: 86400 # 1일

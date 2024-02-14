@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.threethings.api.member.domain.Member;
-import com.threethings.api.member.factory.MemberFactory;
+import com.threethings.api.member.exception.MemberErrorResult;
+import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.member.factory.domain.MemberFactory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -43,25 +45,6 @@ public class MemberRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("닉네임 수정")
-	void updateNickNameTest() {
-		// given
-		String updateNickname = "updated";
-		Member member = memberRepository.save(MemberFactory.createMember());
-		clear();
-
-		// when
-		Member foundMember = memberRepository.findById(member.getId()).get();
-		foundMember.updateNickname(updateNickname);
-		clear();
-
-		// then
-		Member updatedMember = memberRepository.findById(member.getId()).get();
-		assertThat(updatedMember.getNickname()).isEqualTo(updateNickname);
-		assertThat(member.getNickname()).isNotEqualTo(updatedMember.getNickname());
-	}
-
-	@Test
 	@DisplayName("닉네임으로 회원 검색")
 	void findByNickname() {
 		// given
@@ -69,9 +52,26 @@ public class MemberRepositoryTest {
 		clear();
 
 		// when
-		Member foundMember = memberRepository.findByNickname(member.getNickname()).get();
+		Member foundMember = memberRepository.findByNickname(member.getNickname())
+			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
 
 		// then
 		assertThat(member.getNickname()).isEqualTo(foundMember.getNickname());
+	}
+
+	@Test
+	@DisplayName("소셜코드와 리소스서버 이름으로 회원 검색")
+	void findBySocialCodeAndProvider() {
+		// given
+		Member member = memberRepository.save(MemberFactory.createMember());
+		clear();
+
+		// when
+		Member foundMember = memberRepository.findBySocialCodeAndProvider(member.getSocialCode(), member.getProvider())
+			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
+
+		// then
+		assertThat(member.getSocialCode()).isEqualTo(foundMember.getSocialCode());
+		assertThat(member.getProvider()).isEqualTo(foundMember.getProvider());
 	}
 }

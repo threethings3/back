@@ -17,21 +17,12 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 
-	@Transactional
-	public void updateNickname(Long id, String newNickName) {
-		Member member = findMember(id);
-		if (isNicknameDuplicate(newNickName)) {
-			throw new MemberException(MemberErrorResult.NICKNAME_IS_DUPLICATED);
-		}
-		member.updateNickname(newNickName);
-	}
-
 	public boolean isNicknameDuplicate(String nickname) {
 		return memberRepository.existsByNickname(nickname);
 	}
 
-	private Member findMember(Long id) {
-		return memberRepository.findById(id)
+	public Member findMember(Long memberId) {
+		return memberRepository.findById(memberId)
 			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
 	}
 }

@@ -23,7 +23,7 @@ public class TokenHelper {
 	private static final String MEMBER_ID = "MEMBER_ID";
 
 	public String createToken(PrivateClaims privateClaims) {
-		return jwtHandler.generateToken(key,
+		return jwtHandler.createToken(key,
 			Map.of(MEMBER_ID, privateClaims.getMemberId(),
 				ROLE_TYPES, String.join(SEP, privateClaims.getRoleTypes())), maxAgeSeconds);
 	}
