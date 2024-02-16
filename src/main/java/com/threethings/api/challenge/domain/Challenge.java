@@ -7,7 +7,6 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.threethings.api.challenge.converter.ChallengeCategoryConverter;
 import com.threethings.api.challenge.converter.DaysOfWeekConverter;
 import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.global.common.BaseEntity;
@@ -35,8 +34,8 @@ public class Challenge extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Convert(converter = ChallengeCategoryConverter.class)
-	private ChallengeCategory challengeCategory;
+	@Embedded
+	private ChallengeProfile challengeProfile;
 
 	private String title;
 
@@ -57,10 +56,10 @@ public class Challenge extends BaseEntity {
 	private List<ChallengeMember> members = new ArrayList<>();
 
 	@Builder
-	public Challenge(ChallengeCategory challengeCategory, String title, Goal goal,
+	public Challenge(ChallengeProfile challengeProfile, String title, Goal goal,
 		CertificationTime certificationTime,
 		List<Integer> cycleDays, Integer challengePeriodWeeks, Boolean isPublic, Integer maxParticipants) {
-		this.challengeCategory = challengeCategory;
+		this.challengeProfile = challengeProfile;
 		this.title = title;
 		this.goal = goal;
 		this.certificationTime = certificationTime;
