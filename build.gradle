@@ -78,4 +78,8 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.10.1'
 
+    // mysql
+    implementation 'mysql:mysql-connector-java:8.0.31'
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
