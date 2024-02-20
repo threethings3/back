@@ -8,16 +8,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum ChallengeCategory implements DocsEnumType {
-	EXERCISE(1, "운동", 1),
-	DIET(2, "식습관", 2),
-	MINDFULNESS(3, "마음챙김", 3),
-	PET_CARE(4, "반려동물", 4),
-	HOBBY(5, "취미", 5),
-	GROWTH(6, "성장", 6);
+	EXERCISE(1, "운동"),
+	DIET(2, "식습관"),
+	MINDFULNESS(3, "마음챙김"),
+	PET_CARE(4, "반려동물"),
+	HOBBY(5, "취미"),
+	GROWTH(6, "성장");
 
 	private final int code;
 	private final String name;
-	private final int imageId;
 
 	@Override
 	public String getName() {

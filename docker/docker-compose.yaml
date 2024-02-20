@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  main-db:
+    image: mysql:5.7
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: test12!@
+      MYSQL_DATABASE: threethingsdb
+      MYSQL_USER: threethings
+      MYSQL_PASSWORD: test12!@
+    ports:
+      - "3306:3306"
+    volumes:
+      - main-db-data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    platform: linux/amd64
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  main-db-data:
+  redis-data:

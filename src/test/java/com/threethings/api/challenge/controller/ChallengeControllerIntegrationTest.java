@@ -55,8 +55,9 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 						headerWithName("Authorization").description("AccessToken")
 					),
 					requestFields(
-						fieldWithPath("challengeCategory")
+						fieldWithPath("challengeProfile.challengeCategory")
 							.description("link:common/ChallengeCategory.html[카테고리,role=\"popup\"]"),
+						fieldWithPath("challengeProfile.categoryImageId").description("이미지 고유 넘버"),
 						fieldWithPath("title").description("챌린지 제목"),
 						fieldWithPath("goal").description("챌린지 목표"),
 						fieldWithPath("goal.perfect").description("최고 목표"),
