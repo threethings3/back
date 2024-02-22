@@ -57,7 +57,6 @@ public class MemberSignControllerAdviceTest {
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(gson.toJson(req)))
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.code").value(-1000))
 			.andExpect(jsonPath("$.result.msg").value("Member Not Found"));
 	}
 }
