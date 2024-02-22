@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class ChallengeFacade {
 	private final ChallengeService challengeService;
 	private final MemberService memberService;
