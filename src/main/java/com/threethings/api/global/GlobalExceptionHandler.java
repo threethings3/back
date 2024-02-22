@@ -28,7 +28,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({MemberException.class})
 	public ResponseEntity<Response> handleMemberRestApiException(final MemberException exception) {
 		log.warn("MemberException occur: ", exception);
-		return makeErrorResponseEntity(exception.getErrorResult().getHttpStatus(), exception.getErrorResult().getMessage());
+		return makeErrorResponseEntity(exception.getErrorResult().getHttpStatus(),
+			exception.getErrorResult().getMessage());
 	}
 
 	/**
