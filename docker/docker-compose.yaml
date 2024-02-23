@@ -9,7 +9,7 @@ services:
       MYSQL_USER: threethings
       MYSQL_PASSWORD: test12!@
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - main-db-data:/var/lib/mysql
 

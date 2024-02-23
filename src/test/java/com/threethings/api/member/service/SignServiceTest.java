@@ -14,13 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.threethings.api.config.token.TokenHelper;
+import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.domain.Member;
 import com.threethings.api.member.domain.Provider;
 import com.threethings.api.member.dto.SignInRequest;
 import com.threethings.api.member.dto.SignResponse;
 import com.threethings.api.member.dto.SignUpRequest;
-import com.threethings.api.member.exception.MemberErrorResult;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.member.exception.MemberExceptionType;
 import com.threethings.api.member.factory.domain.MemberFactory;
 import com.threethings.api.member.factory.dto.SignInRequestFactory;
 import com.threethings.api.member.factory.dto.SignUpRequestFactory;
@@ -87,10 +87,11 @@ class SignServiceTest {
 		given(memberRepository.findBySocialCodeAndProvider(any(), any())).willReturn(Optional.empty());
 
 		// when
-		final MemberException result = assertThrows(MemberException.class, () ->
+		final DomainException result = assertThrows(DomainException.class, () ->
 			signService.signIn(new SignInRequest("notexists", Provider.NAVER)));
 
 		// then
-		assertThat(result.getErrorResult()).isEqualTo(MemberErrorResult.MEMBER_NOT_FOUND);
+		assertThat(result.getDomainExceptionTypeInterface())
+			.isEqualTo(MemberExceptionType.MEMBER_NOT_FOUND);
 	}
 }

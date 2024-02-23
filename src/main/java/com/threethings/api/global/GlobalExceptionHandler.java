@@ -11,7 +11,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.threethings.api.global.common.Response;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.global.exception.DomainException;
+import com.threethings.api.global.exception.DomainExceptionTypeInterface;
 
 import lombok.Generated;
 import lombok.NonNull;
@@ -23,20 +24,20 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
-	 * 회원 Exception 처리
+	 * Domain Exception 처리
 	 */
-	@ExceptionHandler({MemberException.class})
-	public ResponseEntity<Response> handleMemberRestApiException(final MemberException exception) {
-		log.warn("MemberException occur: ", exception);
-		return makeErrorResponseEntity(exception.getErrorResult().getHttpStatus(),
-			exception.getErrorResult().getMessage());
+	@ExceptionHandler({DomainException.class})
+	public ResponseEntity<Response> handleDomainException(final DomainException exception) {
+		DomainExceptionTypeInterface ex = exception.getDomainExceptionTypeInterface();
+		ex.printErrorLog();
+		return makeErrorResponseEntity(ex.getHttpStatus(), ex.getMessage());
 	}
 
 	/**
 	 * Exception 처리 -> 서버 에러로
 	 */
 	@ExceptionHandler({Exception.class})
-	public ResponseEntity<Response> handleException(final RuntimeException exception) {
+	public ResponseEntity<Response> handleException(final Exception exception) {
 		log.warn("Exception occur: ", exception);
 		return makeErrorResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
 	}
