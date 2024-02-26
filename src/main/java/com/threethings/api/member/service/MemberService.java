@@ -3,9 +3,9 @@ package com.threethings.api.member.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.domain.Member;
-import com.threethings.api.member.exception.MemberErrorResult;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.member.exception.MemberExceptionType;
 import com.threethings.api.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,6 @@ public class MemberService {
 
 	public Member findMember(Long memberId) {
 		return memberRepository.findById(memberId)
-			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
 	}
 }

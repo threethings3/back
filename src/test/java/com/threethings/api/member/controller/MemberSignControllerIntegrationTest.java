@@ -72,7 +72,6 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 					),
 					responseFields(
 						fieldWithPath("success").description("성공 여부"),
-						fieldWithPath("code").description("결과 코드"),
 						fieldWithPath("result.data.memberResponse.profileImageId").description("프로필 ID"),
 						fieldWithPath("result.data.memberResponse.nickname").description("닉네임"),
 						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories")
@@ -109,7 +108,6 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 					),
 					responseFields(
 						fieldWithPath("success").description("성공 여부"),
-						fieldWithPath("code").description("결과 코드"),
 						fieldWithPath("result.data.memberResponse.profileImageId").description("프로필 ID"),
 						fieldWithPath("result.data.memberResponse.nickname").description("닉네임"),
 						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories")

@@ -72,8 +72,7 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 						fieldWithPath("maxParticipants").description("최대 참가자 수")
 					),
 					responseFields(
-						fieldWithPath("success").description("성공 여부"),
-						fieldWithPath("code").description("결과 코드")
+						fieldWithPath("success").description("성공 여부")
 					)
 				)
 			);

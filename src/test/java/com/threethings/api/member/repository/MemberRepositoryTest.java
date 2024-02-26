@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.domain.Member;
-import com.threethings.api.member.exception.MemberErrorResult;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.member.exception.MemberExceptionType;
 import com.threethings.api.member.factory.domain.MemberFactory;
 
 import jakarta.persistence.EntityManager;
@@ -53,7 +53,7 @@ public class MemberRepositoryTest {
 
 		// when
 		Member foundMember = memberRepository.findByNickname(member.getNickname())
-			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
 
 		// then
 		assertThat(member.getNickname()).isEqualTo(foundMember.getNickname());
@@ -68,7 +68,7 @@ public class MemberRepositoryTest {
 
 		// when
 		Member foundMember = memberRepository.findBySocialCodeAndProvider(member.getSocialCode(), member.getProvider())
-			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
 
 		// then
 		assertThat(member.getSocialCode()).isEqualTo(foundMember.getSocialCode());

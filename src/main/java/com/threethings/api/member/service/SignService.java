@@ -4,14 +4,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.threethings.api.config.token.TokenHelper;
+import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.domain.Member;
 import com.threethings.api.member.domain.MemberRole;
 import com.threethings.api.member.dto.SignInRequest;
 import com.threethings.api.member.dto.SignResponse;
 import com.threethings.api.member.dto.SignUpRequest;
 import com.threethings.api.member.dto.TokenResponse;
-import com.threethings.api.member.exception.MemberErrorResult;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.member.exception.MemberExceptionType;
 import com.threethings.api.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class SignService {
 	@Transactional(readOnly = true)
 	public SignResponse signIn(SignInRequest req) {
 		Member member = memberRepository.findBySocialCodeAndProvider(req.getSocialCode(), req.getProvider())
-			.orElseThrow(() -> new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
+			.orElseThrow(() -> new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
 		return SignResponse.toDto(member, createTokens(createPrivateClaims(member)));
 	}
 

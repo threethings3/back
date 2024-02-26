@@ -21,6 +21,7 @@ public class ChallengeFacade {
 	private final MemberService memberService;
 	private final ChallengeMemberService challengeMemberService;
 
+	@Transactional
 	public void createChallenge(Long memberId, ChallengeCreateRequestDto req) {
 		Member member = memberService.findMember(memberId);
 		Challenge challenge = ChallengeCreateRequestDto.toEntity(req);

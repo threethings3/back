@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.threethings.api.global.common.Response;
-import com.threethings.api.member.exception.MemberErrorResult;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.global.exception.DomainException;
+import com.threethings.api.member.exception.MemberExceptionType;
 import com.threethings.api.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class MemberController {
 		if (!memberService.isNicknameDuplicate(nickname)) {
 			return ResponseEntity.ok(Response.success());
 		} else {
-			throw new MemberException(MemberErrorResult.NICKNAME_IS_EXIST);
+			throw new DomainException(MemberExceptionType.NICKNAME_IS_EXIST);
 		}
 	}
 }

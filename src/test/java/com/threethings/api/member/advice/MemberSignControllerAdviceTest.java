@@ -17,10 +17,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
 import com.threethings.api.global.GlobalExceptionHandler;
+import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.controller.MemberSignController;
 import com.threethings.api.member.dto.SignInRequest;
-import com.threethings.api.member.exception.MemberErrorResult;
-import com.threethings.api.member.exception.MemberException;
+import com.threethings.api.member.exception.MemberExceptionType;
 import com.threethings.api.member.factory.dto.SignInRequestFactory;
 import com.threethings.api.member.service.SignService;
 
@@ -49,7 +49,7 @@ public class MemberSignControllerAdviceTest {
 		// given
 		String url = "/api/sign-in";
 		SignInRequest req = SignInRequestFactory.createSignInRequest();
-		given(signService.signIn(any())).willThrow(new MemberException(MemberErrorResult.MEMBER_NOT_FOUND));
+		given(signService.signIn(any())).willThrow(new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
 
 		// when, then
 		mockMvc.perform(
@@ -57,7 +57,6 @@ public class MemberSignControllerAdviceTest {
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(gson.toJson(req)))
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.code").value(-1000))
 			.andExpect(jsonPath("$.result.msg").value("Member Not Found"));
 	}
 }
