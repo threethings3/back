@@ -34,9 +34,9 @@ public class ChallengeMemberCertification extends BaseEntity {
 	public ChallengeMemberCertification(ChallengeMember challengeMember, Certification certification) {
 		this.certification = certification;
 		this.certificationTime = LocalDate.now();
-		addCertification(challengeMember);
+		setChallengeMember(challengeMember);
 	}
-	private void addCertification(ChallengeMember challengeMember) {
+	private void setChallengeMember(ChallengeMember challengeMember) {
 		this.challengeMember = challengeMember;
 		challengeMember.getCertificationHistories().add(this);
 	}
