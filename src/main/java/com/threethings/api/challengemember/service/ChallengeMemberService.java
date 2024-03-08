@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.threethings.api.challengemember.domain.ChallengeMemberCertification;
 import com.threethings.api.challengemember.domain.ChallengeMember;
+import com.threethings.api.challengemember.domain.ChallengeMemberCertification;
 import com.threethings.api.challengemember.dto.ChallengeMemberCertRequestDto;
 import com.threethings.api.challengemember.exception.ChallengeMemberExceptionType;
 import com.threethings.api.challengemember.repository.CertificationHistoryRepository;
@@ -42,7 +42,8 @@ public class ChallengeMemberService {
 		if (exists) {
 			throw new DomainException(ChallengeMemberExceptionType.DUPLICATED_CHALLENGE_CERT);
 		}
-		ChallengeMemberCertification saveEntity = ChallengeMemberCertification.createCertificationHistory(findChallengeMember,
+		ChallengeMemberCertification saveEntity = ChallengeMemberCertification.createCertificationHistory(
+			findChallengeMember,
 			req.getCertification());
 		certificationHistoryRepository.save(saveEntity);
 	}
