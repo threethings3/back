@@ -42,9 +42,10 @@ public class ChallengeMemberService {
 		if (exists) {
 			throw new DomainException(ChallengeMemberExceptionType.DUPLICATED_CHALLENGE_CERT);
 		}
-		ChallengeMemberCertification saveEntity = ChallengeMemberCertification.createCertificationHistory(
-			findChallengeMember,
-			req.getCertification());
+		ChallengeMemberCertification saveEntity = ChallengeMemberCertification.builder()
+			.challengeMember(findChallengeMember)
+			.certification(req.getCertification())
+			.build();
 		certificationHistoryRepository.save(saveEntity);
 	}
 }

@@ -1,6 +1,5 @@
 package com.threethings.api.challengemember.service;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
@@ -86,7 +85,10 @@ class ChallengeMemberServiceTest {
 		var req = new ChallengeMemberCertRequestDto(1L, Certification.PERFECT);
 		var challengeMember = ChallengeMemberFactory.createChallengeMember();
 		challengeMember.getCertificationHistories()
-			.add(ChallengeMemberCertification.createCertificationHistory(challengeMember, req.getCertification()));
+			.add(ChallengeMemberCertification.builder()
+				.challengeMember(challengeMember)
+				.certification(req.getCertification())
+				.build());
 		given(challengeMemberRepository.findByMemberIdAndChallengeId(anyLong(), anyLong())).willReturn(
 			Optional.of(challengeMember));
 		//when

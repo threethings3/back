@@ -13,16 +13,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class ChallengeMemberCertification extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +30,10 @@ public class ChallengeMemberCertification extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ChallengeMember challengeMember;
 
-	public static ChallengeMemberCertification createCertificationHistory(ChallengeMember challengeMember,
-		Certification certification) {
-		return ChallengeMemberCertification.builder()
-			.challengeMember(challengeMember)
-			.certification(certification)
-			.certificationTime(LocalDate.now())
-			.build();
+	@Builder
+	public ChallengeMemberCertification(ChallengeMember challengeMember, Certification certification) {
+		this.challengeMember = challengeMember;
+		this.certification = certification;
+		this.certificationTime = LocalDate.now();
 	}
 }

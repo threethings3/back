@@ -21,8 +21,10 @@ class ChallengeMemberCertificationTest {
 		ChallengeMember challengeMember = new ChallengeMember(challenge, member);
 		Certification certification = Certification.PERFECT;
 		//when
-		ChallengeMemberCertification created = ChallengeMemberCertification.createCertificationHistory(
-			challengeMember, certification);
+		ChallengeMemberCertification created = ChallengeMemberCertification.builder()
+			.challengeMember(challengeMember)
+			.certification(certification)
+			.build();
 		//then
 		assertThat(created.getChallengeMember().getChallenge()).isEqualTo(challenge);
 		assertThat(created.getChallengeMember().getMember()).isEqualTo(member);
