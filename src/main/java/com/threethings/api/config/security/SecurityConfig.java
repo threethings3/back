@@ -33,7 +33,9 @@ public class SecurityConfig {
 			.authorizeHttpRequests(authorize ->
 				authorize.requestMatchers(WHITE_LIST).permitAll()
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-					.requestMatchers(HttpMethod.POST, "/api/challenge").authenticated())
+					.requestMatchers(HttpMethod.POST, "/api/challenge").authenticated()
+					.requestMatchers( "/api/challenge/cert").authenticated()
+			)
 			.addFilterBefore(new JwtAuthenticationFilter(userDetailsService),
 				UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling(authenticationManager ->
