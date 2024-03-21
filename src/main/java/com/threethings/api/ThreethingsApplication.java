@@ -8,7 +8,6 @@ import lombok.Generated;
 
 @Generated
 @SpringBootApplication
-@EnableJpaAuditing
 public class ThreethingsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ThreethingsApplication.class, args);

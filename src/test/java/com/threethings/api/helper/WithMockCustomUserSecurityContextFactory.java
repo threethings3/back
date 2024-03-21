@@ -3,7 +3,6 @@ package com.threethings.api.helper;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithSecurityContextFactory;
 import org.springframework.util.Assert;
 
+import com.threethings.api.config.security.CustomAuthenticationToken;
 import com.threethings.api.config.security.CustomUserDetails;
 
 public class WithMockCustomUserSecurityContextFactory implements WithSecurityContextFactory<WithMockCustomUser> {
@@ -23,9 +23,8 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
 			Assert.isTrue(!role.startsWith("ROLE_"), () -> "roles cannot start with ROLE_ Got " + role);
 			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
-		CustomUserDetails principal = new CustomUserDetails(annotation.userId(), grantedAuthorities);
-		Authentication auth = new UsernamePasswordAuthenticationToken(principal, "password",
-			principal.getAuthorities());
+		CustomUserDetails userDetails = new CustomUserDetails(annotation.userId(), grantedAuthorities);
+		Authentication auth = new CustomAuthenticationToken(userDetails, userDetails.getAuthorities());
 		context.setAuthentication(auth);
 		return context;
 	}

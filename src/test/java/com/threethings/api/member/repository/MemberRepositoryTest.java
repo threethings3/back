@@ -6,7 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
+import com.threethings.api.config.JpaAuditingConfig;
 import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.domain.Member;
 import com.threethings.api.member.exception.MemberExceptionType;
@@ -16,6 +18,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @DataJpaTest
+@Import(JpaAuditingConfig.class)
 public class MemberRepositoryTest {
 
 	@Autowired
