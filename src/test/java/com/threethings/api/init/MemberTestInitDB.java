@@ -35,7 +35,7 @@ public class MemberTestInitDB {
 			.provider(Provider.KAKAO)
 			.socialCode("-12345678")
 			.profileImageId(2L)
-			.favoriteChallengeCategories(Set.of(ChallengeCategory.PET_CARE, ChallengeCategory.GROWTH)).build();
+			.favoriteChallengeCategories(Set.of(ChallengeCategory.MINDFULNESS, ChallengeCategory.GROWTH)).build();
 
 		memberRepository.saveAll(List.of(member1, member2));
 	}
