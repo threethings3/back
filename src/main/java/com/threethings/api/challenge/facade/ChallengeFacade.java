@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.threethings.api.challenge.domain.Challenge;
 import com.threethings.api.challenge.dto.ChallengeCreateRequestDto;
+import com.threethings.api.challenge.dto.ChallengeLikeRequestDto;
 import com.threethings.api.challenge.service.ChallengeService;
 import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.challengemember.service.ChallengeMemberService;
@@ -29,4 +30,16 @@ public class ChallengeFacade {
 		challengeService.saveChallenge(challenge);
 		challengeMemberService.saveChallengeMember(challengeMember);
 	}
+
+	@Transactional
+	public void likeChallenge(Long memberId, ChallengeLikeRequestDto req) {
+		Member member = memberService.findMember(memberId);
+		Challenge challenge = challengeService.findChallenge(req.getChallengeId());
+		if (!req.getLiked()) {
+			challenge.addFavoriteMember(member);
+		} else {
+			challenge.removeFavoriteMember(member);
+		}
+	}
+
 }

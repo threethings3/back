@@ -4,6 +4,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,19 +20,32 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.threethings.api.challenge.dto.ChallengeCreateRequestDto;
+import com.threethings.api.challenge.dto.ChallengeLikeRequestDto;
 import com.threethings.api.challenge.factory.ChallengeCreateRequestFactory;
 import com.threethings.api.docs.utils.RestDocsTest;
 import com.threethings.api.helper.TokenProvider;
+import com.threethings.api.init.ChallengeTestInitDB;
 import com.threethings.api.init.MemberTestInitDB;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @Transactional
 public class ChallengeControllerIntegrationTest extends RestDocsTest {
+	private static final String MEMBER_TABLE_NAME = "member";
+	private static final String CHALLENGE_TABLE_NAME = "challenge";
 	@Autowired
 	MemberTestInitDB memberTestInitDB;
+	@Autowired
+	ChallengeTestInitDB challengeTestInitDB;
+	@PersistenceContext
+	EntityManager em;
 
 	@BeforeEach
 	void initDB() {
+		resetTableAutoIncrementValue(List.of(MEMBER_TABLE_NAME, CHALLENGE_TABLE_NAME));
 		memberTestInitDB.initDB();
+		challengeTestInitDB.initDB();
 	}
 
 	@Test
@@ -73,6 +87,69 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 					),
 					responseFields(
 						fieldWithPath("success").description("성공 여부")
+					)
+				)
+			);
+	}
+
+	@Test
+	@DisplayName("좋아요 테스트 - POST /api/challenge/like")
+	void likeChallengeTest() throws Exception {
+		// given
+		final String url = "/api/challenge/like";
+		final ChallengeLikeRequestDto req = new ChallengeLikeRequestDto(1L, Boolean.FALSE);
+
+		// when
+		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post(url)
+			.header("Authorization", TokenProvider.getValidAccessToken())
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(gson.toJson(req)));
+
+		// then
+		resultActions.andExpect(status().isOk())
+			.andDo(
+				restDocs.document(
+					requestHeaders(
+						headerWithName("Authorization").description("AccessToken")
+					),
+					requestFields(
+						fieldWithPath("challengeId").description("챌린지 고유 넘버"),
+						fieldWithPath("liked").description("현재 좋아요 여부")
+					),
+					responseFields(
+						fieldWithPath("success").description("성공 여부")
+					)
+				)
+			);
+	}
+
+	@Test
+	@DisplayName("좋아요 실패 테스트 (챌린지 없음) - POST /api/challenge/like")
+	void likeChallengeFailTest() throws Exception {
+		// given
+		final String url = "/api/challenge/like";
+		final ChallengeLikeRequestDto req = new ChallengeLikeRequestDto(-1L, Boolean.FALSE);
+
+		// when
+		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post(url)
+			.header("Authorization", TokenProvider.getValidAccessToken())
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(gson.toJson(req)));
+
+		// then
+		resultActions.andExpect(status().isNotFound())
+			.andDo(
+				restDocs.document(
+					requestHeaders(
+						headerWithName("Authorization").description("AccessToken")
+					),
+					requestFields(
+						fieldWithPath("challengeId").description("챌린지 고유 넘버"),
+						fieldWithPath("liked").description("현재 좋아요 여부")
+					),
+					responseFields(
+						fieldWithPath("success").description("성공 여부"),
+						fieldWithPath("result.msg").description("실패 메시지")
 					)
 				)
 			);

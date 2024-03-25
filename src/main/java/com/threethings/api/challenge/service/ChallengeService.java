@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.threethings.api.challenge.domain.Challenge;
+import com.threethings.api.challenge.exception.ChallengeExceptionType;
 import com.threethings.api.challenge.repository.ChallengeRepository;
+import com.threethings.api.global.exception.DomainException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,5 +18,10 @@ public class ChallengeService {
 	@Transactional
 	public void saveChallenge(Challenge challenge) {
 		challengeRepository.save(challenge);
+	}
+
+	public Challenge findChallenge(Long challengeId) {
+		return challengeRepository.findById(challengeId)
+			.orElseThrow(() -> new DomainException(ChallengeExceptionType.CHALLENGE_NOT_FOUND));
 	}
 }
