@@ -12,17 +12,27 @@ import com.threethings.api.challenge.domain.ChallengeCategory;
 import com.threethings.api.challenge.domain.ChallengeProfile;
 import com.threethings.api.challenge.domain.Goal;
 import com.threethings.api.challenge.repository.ChallengeRepository;
+import com.threethings.api.challengemember.domain.ChallengeMember;
+import com.threethings.api.challengemember.repository.ChallengeMemberRepository;
+import com.threethings.api.member.domain.Member;
+import com.threethings.api.member.repository.MemberRepository;
 
 @Component
 public class ChallengeTestInitDB {
 	@Autowired
 	ChallengeRepository challengeRepository;
+	@Autowired
+	MemberRepository memberRepository;
+	@Autowired
+	ChallengeMemberRepository challengeMemberRepository;
 
 	public void initDB() {
 		initTestChallenge();
 	}
 
 	private void initTestChallenge() {
+		Member member1 = memberRepository.findById(1L).orElseThrow();
+		Member member2 = memberRepository.findById(2L).orElseThrow();
 		Challenge challengeTestData1 = Challenge.builder()
 			.challengeProfile(new ChallengeProfile(ChallengeCategory.GROWTH, 1L))
 			.title("삼시 세끼 밥 먹기")
@@ -32,6 +42,8 @@ public class ChallengeTestInitDB {
 			.challengePeriodWeeks(4)
 			.isPublic(Boolean.TRUE)
 			.maxParticipants(30).build();
+		ChallengeMember challengeMember1 = new ChallengeMember(challengeTestData1, member1);
+		ChallengeMember challengeMember2 = new ChallengeMember(challengeTestData1, member2);
 
 		Challenge challengeTestData2 = Challenge.builder()
 			.challengeProfile(new ChallengeProfile(ChallengeCategory.GROWTH, 1L))
@@ -42,9 +54,9 @@ public class ChallengeTestInitDB {
 			.challengePeriodWeeks(3)
 			.isPublic(Boolean.TRUE)
 			.maxParticipants(20).build();
+		ChallengeMember challengeMember3 = new ChallengeMember(challengeTestData2, member1);
 
 		challengeRepository.saveAll(List.of(challengeTestData1, challengeTestData2));
-
-		System.out.println("123");
+		challengeMemberRepository.saveAll(List.of(challengeMember1, challengeMember2, challengeMember3));
 	}
 }

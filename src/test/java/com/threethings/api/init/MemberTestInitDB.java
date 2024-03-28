@@ -16,26 +16,27 @@ public class MemberTestInitDB {
 	@Autowired
 	MemberRepository memberRepository;
 
-	Member member1 = Member.builder()
-		.nickname("testMember1")
-		.provider(Provider.NAVER)
-		.socialCode("12345678")
-		.profileImageId(1L)
-		.favoriteChallengeCategories(Set.of(ChallengeCategory.EXERCISE, ChallengeCategory.GROWTH)).build();
-
-	Member member2 = Member.builder()
-		.nickname("testMember2")
-		.provider(Provider.KAKAO)
-		.socialCode("-12345678")
-		.profileImageId(2L)
-		.favoriteChallengeCategories(Set.of(ChallengeCategory.MINDFULNESS, ChallengeCategory.GROWTH)).build();
-
 	public void initDB() {
 		initTestMember();
 	}
 
 	private void initTestMember() {
+		Member member1 = Member.builder()
+			.nickname("testMember1")
+			.provider(Provider.NAVER)
+			.socialCode("12345678")
+			.profileImageId(1L)
+			.favoriteChallengeCategories(Set.of(ChallengeCategory.EXERCISE, ChallengeCategory.GROWTH))
+			.build();
+
+		Member member2 = Member.builder()
+			.nickname("testMember2")
+			.provider(Provider.KAKAO)
+			.socialCode("-12345678")
+			.profileImageId(2L)
+			.favoriteChallengeCategories(Set.of(ChallengeCategory.MINDFULNESS, ChallengeCategory.GROWTH))
+			.build();
+
 		memberRepository.saveAll(List.of(member1, member2));
 	}
-
 }

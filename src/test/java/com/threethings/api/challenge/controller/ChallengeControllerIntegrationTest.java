@@ -2,6 +2,7 @@ package com.threethings.api.challenge.controller;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ import jakarta.persistence.PersistenceContext;
 public class ChallengeControllerIntegrationTest extends RestDocsTest {
 	private static final String MEMBER_TABLE_NAME = "member";
 	private static final String CHALLENGE_TABLE_NAME = "challenge";
+	private static final String CHALLENGE_MEMBER_TABLE_NAME = "challenge_member";
 	@Autowired
 	MemberTestInitDB memberTestInitDB;
 	@Autowired
@@ -43,7 +45,7 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 
 	@BeforeEach
 	void initDB() {
-		resetTableAutoIncrementValue(List.of(MEMBER_TABLE_NAME, CHALLENGE_TABLE_NAME));
+		resetTableAutoIncrementValue(List.of(MEMBER_TABLE_NAME, CHALLENGE_TABLE_NAME, CHALLENGE_MEMBER_TABLE_NAME));
 		memberTestInitDB.initDB();
 		challengeTestInitDB.initDB();
 	}
@@ -153,6 +155,54 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 					)
 				)
 			);
+	}
+
+	@Test
+	@DisplayName("챌린지 검색 테스트")
+	void searchChallengeTest() throws Exception {
+		// given
+		final String url = "/api/challenge";
+		final String keyword = "밥";
+
+		// when
+		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url)
+			.header("Authorization", TokenProvider.getValidAccessToken())
+			.param("page", "0")
+			.param("keyword", keyword));
+
+		// then
+		resultActions.andExpect(status().isOk()).andDo(
+			restDocs.document(
+				requestHeaders(
+					headerWithName("Authorization").description("AccessToken")
+				),
+				queryParameters(
+					parameterWithName("page").description("페이지 번호"),
+					parameterWithName("keyword").description("검색 키워드")
+				),
+				responseFields(
+					fieldWithPath("success").description("요청 성공 여부"),
+					fieldWithPath("result.data.pageNumber").description("현재 페이지 번호"),
+					fieldWithPath("result.data.pageSize").description("페이지 크기"),
+					fieldWithPath("result.data.isFirst").description("첫 번째 페이지 여부"),
+					fieldWithPath("result.data.isLast").description("마지막 페이지 여부"),
+					fieldWithPath("result.data.totalPages").description("전체 페이지 수"),
+					fieldWithPath("result.data.totalElements").description("전체 요소 수"),
+					fieldWithPath("result.data.contents[].challengeId").description("챌린지 ID"),
+					fieldWithPath("result.data.contents[].challengeProfile.challengeCategory")
+						.description("챌린지 카테고리"),
+					fieldWithPath("result.data.contents[].challengeProfile.categoryImageId").description("챌린지 이미지 ID"),
+					fieldWithPath("result.data.contents[].title").description("챌린지 제목"),
+					fieldWithPath("result.data.contents[].beginChallengeDate")
+						.description("챌린지 시작일"),
+					fieldWithPath("result.data.contents[].endChallengeDate")
+						.description("챌린지 종료일"),
+					fieldWithPath("result.data.contents[].certificationTime.startTime").description("인증 시작 시간"),
+					fieldWithPath("result.data.contents[].certificationTime.endTime").description("인증 마감 시간"),
+					fieldWithPath("result.data.contents[].participants").description("참가자 수"),
+					fieldWithPath("result.data.contents[].liked").description("좋아요 여부")
+				)
+			));
 	}
 
 	@ParameterizedTest
