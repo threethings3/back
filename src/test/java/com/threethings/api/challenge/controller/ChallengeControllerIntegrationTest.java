@@ -167,7 +167,7 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 	void getChallengeTitleTest() throws Exception {
 		// given
 		final String url = "/api/challenge/suggestions";
-		final String keyword = "메롱";
+		final String keyword = "공부";
 
 		// when
 		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url)

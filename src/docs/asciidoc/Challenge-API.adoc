@@ -15,3 +15,8 @@ operation::challenge-controller-integration-test/like-challenge-test[snippets='h
 === Challenge-검색
 
 operation::challenge-controller-integration-test/search-challenge-test[snippets='http-request,query-parameters,request-headers,http-response,response-fields']
+
+[[Challenge-자동완성]]
+=== Challenge-자동 완성
+
+operation::challenge-controller-integration-test/get-challenge-title-test[snippets='http-request,query-parameters,request-headers,http-response,response-fields']
