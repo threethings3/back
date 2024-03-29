@@ -65,33 +65,21 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 
 		// then
 		resultActions.andExpect(status().isOk())
-			.andDo(
-				restDocs.document(
-					requestHeaders(
-						headerWithName("Authorization").description("AccessToken")
-					),
-					requestFields(
-						fieldWithPath("challengeProfile.challengeCategory")
-							.description("link:common/ChallengeCategory.html[카테고리,role=\"popup\"]"),
-						fieldWithPath("challengeProfile.categoryImageId").description("이미지 고유 넘버"),
-						fieldWithPath("title").description("챌린지 제목"),
-						fieldWithPath("goal").description("챌린지 목표"),
-						fieldWithPath("goal.perfect").description("최고 목표"),
-						fieldWithPath("goal.better").description("중간 목표"),
-						fieldWithPath("goal.good").description("최저 목표"),
-						fieldWithPath("certificationTime").description("인증 시간"),
-						fieldWithPath("certificationTime.startTime").description("인증 시작 시간"),
-						fieldWithPath("certificationTime.endTime").description("인증 종료 시간"),
-						fieldWithPath("challengePeriodWeeks").description("챌린지 진행"),
-						fieldWithPath("cycleDays").description("수행 요일 [1,2,3,4] 와 같이 정렬해야 함"),
-						fieldWithPath("isPublic").description("공개 여부"),
-						fieldWithPath("maxParticipants").description("최대 참가자 수")
-					),
-					responseFields(
-						fieldWithPath("success").description("성공 여부")
-					)
-				)
-			);
+			.andDo(restDocs.document(requestHeaders(headerWithName("Authorization").description("AccessToken")),
+				requestFields(fieldWithPath("challengeProfile.challengeCategory").description(
+						"link:common/ChallengeCategory.html[카테고리,role=\"popup\"]"),
+					fieldWithPath("challengeProfile.categoryImageId").description("이미지 고유 넘버"),
+					fieldWithPath("title").description("챌린지 제목"), fieldWithPath("goal").description("챌린지 목표"),
+					fieldWithPath("goal.perfect").description("최고 목표"),
+					fieldWithPath("goal.better").description("중간 목표"), fieldWithPath("goal.good").description("최저 목표"),
+					fieldWithPath("certificationTime").description("인증 시간"),
+					fieldWithPath("certificationTime.startTime").description("인증 시작 시간"),
+					fieldWithPath("certificationTime.endTime").description("인증 종료 시간"),
+					fieldWithPath("challengePeriodWeeks").description("챌린지 진행"),
+					fieldWithPath("cycleDays").description("수행 요일 [1,2,3,4] 와 같이 정렬해야 함"),
+					fieldWithPath("isPublic").description("공개 여부"),
+					fieldWithPath("maxParticipants").description("최대 참가자 수")),
+				responseFields(fieldWithPath("success").description("성공 여부"))));
 	}
 
 	@Test
@@ -109,20 +97,10 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 
 		// then
 		resultActions.andExpect(status().isOk())
-			.andDo(
-				restDocs.document(
-					requestHeaders(
-						headerWithName("Authorization").description("AccessToken")
-					),
-					requestFields(
-						fieldWithPath("challengeId").description("챌린지 고유 넘버"),
-						fieldWithPath("liked").description("현재 좋아요 여부")
-					),
-					responseFields(
-						fieldWithPath("success").description("성공 여부")
-					)
-				)
-			);
+			.andDo(restDocs.document(requestHeaders(headerWithName("Authorization").description("AccessToken")),
+				requestFields(fieldWithPath("challengeId").description("챌린지 고유 넘버"),
+					fieldWithPath("liked").description("현재 좋아요 여부")),
+				responseFields(fieldWithPath("success").description("성공 여부"))));
 	}
 
 	@Test
@@ -140,21 +118,11 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 
 		// then
 		resultActions.andExpect(status().isNotFound())
-			.andDo(
-				restDocs.document(
-					requestHeaders(
-						headerWithName("Authorization").description("AccessToken")
-					),
-					requestFields(
-						fieldWithPath("challengeId").description("챌린지 고유 넘버"),
-						fieldWithPath("liked").description("현재 좋아요 여부")
-					),
-					responseFields(
-						fieldWithPath("success").description("성공 여부"),
-						fieldWithPath("result.msg").description("실패 메시지")
-					)
-				)
-			);
+			.andDo(restDocs.document(requestHeaders(headerWithName("Authorization").description("AccessToken")),
+				requestFields(fieldWithPath("challengeId").description("챌린지 고유 넘버"),
+					fieldWithPath("liked").description("현재 좋아요 여부")),
+				responseFields(fieldWithPath("success").description("성공 여부"),
+					fieldWithPath("result.msg").description("실패 메시지"))));
 	}
 
 	@Test
@@ -171,17 +139,11 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 			.param("keyword", keyword));
 
 		// then
-		resultActions.andExpect(status().isOk()).andDo(
-			restDocs.document(
-				requestHeaders(
-					headerWithName("Authorization").description("AccessToken")
-				),
-				queryParameters(
-					parameterWithName("page").description("페이지 번호"),
-					parameterWithName("keyword").description("검색 키워드")
-				),
-				responseFields(
-					fieldWithPath("success").description("요청 성공 여부"),
+		resultActions.andExpect(status().isOk())
+			.andDo(restDocs.document(requestHeaders(headerWithName("Authorization").description("AccessToken")),
+				queryParameters(parameterWithName("page").description("페이지 번호"),
+					parameterWithName("keyword").description("검색 키워드")),
+				responseFields(fieldWithPath("success").description("요청 성공 여부"),
 					fieldWithPath("result.data.pageNumber").description("현재 페이지 번호"),
 					fieldWithPath("result.data.pageSize").description("페이지 크기"),
 					fieldWithPath("result.data.isFirst").description("첫 번째 페이지 여부"),
@@ -189,20 +151,35 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 					fieldWithPath("result.data.totalPages").description("전체 페이지 수"),
 					fieldWithPath("result.data.totalElements").description("전체 요소 수"),
 					fieldWithPath("result.data.contents[].challengeId").description("챌린지 ID"),
-					fieldWithPath("result.data.contents[].challengeProfile.challengeCategory")
-						.description("챌린지 카테고리"),
+					fieldWithPath("result.data.contents[].challengeProfile.challengeCategory").description("챌린지 카테고리"),
 					fieldWithPath("result.data.contents[].challengeProfile.categoryImageId").description("챌린지 이미지 ID"),
 					fieldWithPath("result.data.contents[].title").description("챌린지 제목"),
-					fieldWithPath("result.data.contents[].beginChallengeDate")
-						.description("챌린지 시작일"),
-					fieldWithPath("result.data.contents[].endChallengeDate")
-						.description("챌린지 종료일"),
+					fieldWithPath("result.data.contents[].beginChallengeDate").description("챌린지 시작일"),
+					fieldWithPath("result.data.contents[].endChallengeDate").description("챌린지 종료일"),
 					fieldWithPath("result.data.contents[].certificationTime.startTime").description("인증 시작 시간"),
 					fieldWithPath("result.data.contents[].certificationTime.endTime").description("인증 마감 시간"),
 					fieldWithPath("result.data.contents[].participants").description("참가자 수"),
-					fieldWithPath("result.data.contents[].liked").description("좋아요 여부")
-				)
-			));
+					fieldWithPath("result.data.contents[].liked").description("좋아요 여부"))));
+	}
+
+	@Test
+	@DisplayName("챌린지 검색 자동완성 테스트")
+	void getChallengeTitleTest() throws Exception {
+		// given
+		final String url = "/api/challenge/suggestions";
+		final String keyword = "메롱";
+
+		// when
+		final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url)
+			.header("Authorization", TokenProvider.getValidAccessToken())
+			.param("keyword", keyword));
+
+		// then
+		resultActions.andExpect(status().isOk())
+			.andDo(restDocs.document(requestHeaders(headerWithName("Authorization").description("Access Token")),
+				queryParameters(parameterWithName("keyword").description("검색 단어")),
+				responseFields(fieldWithPath("success").description("성공 여부"),
+					fieldWithPath("result.data[]").description("검색 단어를 포함한 챌린지 제목"))));
 	}
 
 	@ParameterizedTest
@@ -224,10 +201,8 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 	}
 
 	private static Stream<Arguments> provideInvalidAuthorizationValue() {
-		return Stream.of(
-			Arguments.of(TokenProvider.getExpiredAccessToken()),
-			Arguments.of(TokenProvider.getIncorrectSignatureToken())
-		);
+		return Stream.of(Arguments.of(TokenProvider.getExpiredAccessToken()),
+			Arguments.of(TokenProvider.getIncorrectSignatureToken()));
 	}
 
 }

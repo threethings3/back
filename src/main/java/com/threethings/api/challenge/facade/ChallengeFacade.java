@@ -1,5 +1,7 @@
 package com.threethings.api.challenge.facade;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -50,5 +52,9 @@ public class ChallengeFacade {
 
 	public Page<ChallengeSummaryResponseDto> searchChallenge(int page, String keyword, Long memberId) {
 		return challengeService.searchChallenge(keyword, memberId, PageRequest.of(page, CHALLENGE_PER_PAGE));
+	}
+
+	public List<String> suggestionChallengeTitle(String keyword) {
+		return challengeService.suggestionTitle(keyword);
 	}
 }

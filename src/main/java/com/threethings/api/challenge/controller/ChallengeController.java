@@ -30,7 +30,6 @@ public class ChallengeController {
 		@RequestParam String keyword) {
 		return ResponseEntity.ok(Response.success(
 			ChallengePageDto.toDto(challengeFacade.searchChallenge(page, keyword, SecurityUtils.getCurrentUserId()))));
-
 	}
 
 	@PostMapping
@@ -45,4 +44,8 @@ public class ChallengeController {
 		return ResponseEntity.ok(Response.success());
 	}
 
+	@GetMapping("/suggestions")
+	public ResponseEntity<Response> suggestionChallengeTitle(@RequestParam String keyword) {
+		return ResponseEntity.ok(Response.success(challengeFacade.suggestionChallengeTitle(keyword)));
+	}
 }

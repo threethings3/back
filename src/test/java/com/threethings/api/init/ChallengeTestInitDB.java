@@ -41,7 +41,8 @@ public class ChallengeTestInitDB {
 			.cycleDays(List.of(1, 2, 3, 4, 5, 6, 7))
 			.challengePeriodWeeks(4)
 			.isPublic(Boolean.TRUE)
-			.maxParticipants(30).build();
+			.maxParticipants(30)
+			.build();
 		ChallengeMember challengeMember1 = new ChallengeMember(challengeTestData1, member1);
 		ChallengeMember challengeMember2 = new ChallengeMember(challengeTestData1, member2);
 
@@ -53,10 +54,24 @@ public class ChallengeTestInitDB {
 			.cycleDays(List.of(1, 3, 5, 6, 7))
 			.challengePeriodWeeks(3)
 			.isPublic(Boolean.TRUE)
-			.maxParticipants(20).build();
+			.maxParticipants(20)
+			.build();
 		ChallengeMember challengeMember3 = new ChallengeMember(challengeTestData2, member1);
 
-		challengeRepository.saveAll(List.of(challengeTestData1, challengeTestData2));
-		challengeMemberRepository.saveAll(List.of(challengeMember1, challengeMember2, challengeMember3));
+		Challenge challengeTestData3 = Challenge.builder()
+			.challengeProfile(new ChallengeProfile(ChallengeCategory.GROWTH, 1L))
+			.title("매일매일 공부하기")
+			.goal(new Goal("3시간 공부하기", "2시간 공부하기", "1시간 공부하기"))
+			.certificationTime(new CertificationTime(LocalTime.of(8, 0), LocalTime.of(22, 0)))
+			.cycleDays(List.of(1, 3, 5, 6, 7))
+			.challengePeriodWeeks(3)
+			.isPublic(Boolean.TRUE)
+			.maxParticipants(20)
+			.build();
+		ChallengeMember challengeMember4 = new ChallengeMember(challengeTestData2, member2);
+
+		challengeRepository.saveAll(List.of(challengeTestData1, challengeTestData2, challengeTestData3));
+		challengeMemberRepository.saveAll(
+			List.of(challengeMember1, challengeMember2, challengeMember3, challengeMember4));
 	}
 }

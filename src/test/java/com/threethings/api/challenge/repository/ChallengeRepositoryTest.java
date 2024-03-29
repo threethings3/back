@@ -95,7 +95,44 @@ public class ChallengeRepositoryTest {
 		for (int i = 0; i < challengeList.size(); i++) {
 			assertEquals(challengeList.get(i).getId(), res.getContent().get(i).getChallengeId());
 		}
-		System.out.println("123");
+	}
+
+	@Test
+	@DisplayName("챌린지 검색 시 자동완성 데이터 테스트")
+	void getSuggestionChallengeTitleTest() throws NoSuchFieldException, IllegalAccessException {
+		// given
+		Member member = MemberFactory.createMember();
+		Member member2 = MemberFactory.anotherMember();
+		memberRepository.save(member);
+		memberRepository.save(member2);
+
+		// 검색 대상 포함
+		Challenge c2 = ChallengeFactory.createChallenge();
+		c2.addFavoriteMember(member);
+		ChallengeMember cm2 = new ChallengeMember(c2, member);
+		ChallengeMember cm3 = new ChallengeMember(c2, member2);
+
+		// 검색 대상 포함
+		Challenge c3 = ChallengeFactory.createChallenge();
+		changePrivateFieldWithReflection(c3, "title", "하루 세끼 밥 먹기");
+		ChallengeMember cm4 = new ChallengeMember(c3, member);
+		ChallengeMember cm5 = new ChallengeMember(c3, member2);
+
+		// 검색 대상 미포함
+		Challenge c4 = ChallengeFactory.createChallenge();
+		ChallengeMember cm6 = new ChallengeMember(c4, member);
+		changePrivateFieldWithReflection(c4, "title", "검색 대상 미포함");
+
+		List<Challenge> challengeList = List.of(c2, c3, c4);
+		challengeRepository.saveAll(challengeList);
+		challengeMemberRepository.saveAll(List.of(cm2, cm2, cm3, cm4, cm5, cm6));
+
+		clear();
+
+		List<String> result = challengeRepository.findTitle("세끼");
+		assertEquals(result, List.of(c3.getTitle(), c2.getTitle()));
+		List<String> emptyResult = challengeRepository.findTitle("아무것도 없음");
+		assertTrue(emptyResult.isEmpty());
 	}
 
 	private void changePrivateFieldWithReflection(Challenge challenge, String fieldName, Object newValue) throws

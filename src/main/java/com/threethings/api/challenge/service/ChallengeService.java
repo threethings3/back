@@ -1,6 +1,7 @@
 package com.threethings.api.challenge.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,5 +34,9 @@ public class ChallengeService {
 	public Page<ChallengeSummaryResponseDto> searchChallenge(String keyword, Long memberId, Pageable pageable) {
 		return challengeRepository.findByKeywordAndEndDateAfterAndIsPublicTrueWithMembers(
 			keyword, memberId, LocalDate.now(), pageable);
+	}
+
+	public List<String> suggestionTitle(String keyword) {
+		return challengeRepository.findTitle(keyword);
 	}
 }

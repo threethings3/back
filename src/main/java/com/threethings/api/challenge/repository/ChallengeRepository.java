@@ -1,6 +1,7 @@
 package com.threethings.api.challenge.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,4 +29,12 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 		@Param("memberId") Long memberId,
 		@Param("currentDate") LocalDate currentDate,
 		Pageable pageable);
+
+	@Query(value = """
+		SELECT c.title
+		FROM Challenge c
+		WHERE c.title LIKE '%' || :keyword || '%' AND c.isPublic = true
+		ORDER BY c.createdAt DESC LIMIT 10
+		""")
+	List<String> findTitle(@Param("keyword") String keyword);
 }
