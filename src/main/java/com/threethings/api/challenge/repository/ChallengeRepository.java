@@ -43,6 +43,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 	@Query(value = """
 		SELECT c FROM Challenge c
 		LEFT JOIN FETCH c.members cm
+		LEFT JOIN FETCH c.favoriteMembers
 		LEFT JOIN FETCH cm.member
 		WHERE c.id = :id AND c.isPublic = true
 		""")
