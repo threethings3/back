@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -180,6 +181,46 @@ public class ChallengeControllerIntegrationTest extends RestDocsTest {
 				queryParameters(parameterWithName("keyword").description("검색 단어")),
 				responseFields(fieldWithPath("success").description("성공 여부"),
 					fieldWithPath("result.data[]").description("검색 단어를 포함한 챌린지 제목"))));
+	}
+
+	@Test
+	@DisplayName("챌린지 상세 조회 테스트")
+	void getChallengeDetailTest() throws Exception {
+		// given
+		final String url = "/api/challenge/{id}";
+		final Long challengeId = 1L;
+
+		// when
+		// path-variable을 위해 MockMvcRequestBuilders가 아닌 RestDocumentationRequestBuilders 사용
+		final ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders.get(url, challengeId)
+			.header("Authorization", TokenProvider.getValidAccessToken()));
+
+		// then
+		resultActions.andExpect(status().isOk())
+			.andDo(restDocs.document(requestHeaders(
+					headerWithName("Authorization").description("AccessToken")
+				),
+				pathParameters(
+					parameterWithName("id").description("챌린지 고유 번호")
+				),
+				responseFields(
+					fieldWithPath("success").description("요청 성공 여부"),
+					fieldWithPath("result.data.challengeProfile.challengeCategory").description("챌린지 카테고리"),
+					fieldWithPath("result.data.challengeProfile.categoryImageId").description("챌린지 카테고리 이미지 번호"),
+					fieldWithPath("result.data.title").description("챌린지 제목"),
+					fieldWithPath("result.data.goal.perfect").description("상위 목표"),
+					fieldWithPath("result.data.goal.better").description("중간 목표"),
+					fieldWithPath("result.data.goal.good").description("하위 목표"),
+					fieldWithPath("result.data.beginChallengeDate").description("챌린지 시작 날짜"),
+					fieldWithPath("result.data.endChallengeDate").description("챌린지 끝나는 날짜"),
+					fieldWithPath("result.data.cycleDays").description("챌린지 수행 주기(월 : 1, 화: 2 ...)"),
+					fieldWithPath("result.data.certificationTime.startTime").description("챌린지 수행 시작 시간"),
+					fieldWithPath("result.data.certificationTime.endTime").description("챌린지 수행 끝나는 시간"),
+					fieldWithPath("result.data.maxParticipants").description("최대 참여자: 1인경우 혼자 진행"),
+					fieldWithPath("result.data.challengeMembersProfileImageId").description("참여자 프로필 이미지 번호"),
+					fieldWithPath("result.data.liked").description("좋아요 여부")
+				)
+			));
 	}
 
 	@ParameterizedTest

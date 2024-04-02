@@ -16,10 +16,12 @@ import org.springframework.data.domain.PageRequest;
 
 import com.threethings.api.challenge.domain.Challenge;
 import com.threethings.api.challenge.dto.ChallengeSummaryResponseDto;
+import com.threethings.api.challenge.exception.ChallengeExceptionType;
 import com.threethings.api.challenge.factory.ChallengeFactory;
 import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.challengemember.repository.ChallengeMemberRepository;
 import com.threethings.api.config.JpaAuditingConfig;
+import com.threethings.api.global.exception.DomainException;
 import com.threethings.api.member.domain.Member;
 import com.threethings.api.member.factory.domain.MemberFactory;
 import com.threethings.api.member.repository.MemberRepository;
@@ -133,6 +135,36 @@ public class ChallengeRepositoryTest {
 		assertEquals(result, List.of(c3.getTitle(), c2.getTitle()));
 		List<String> emptyResult = challengeRepository.findTitle("아무것도 없음");
 		assertTrue(emptyResult.isEmpty());
+	}
+
+	@Test
+	@DisplayName("특정 챌린지 검색")
+	void getChallengeDetailTest() throws NoSuchFieldException, IllegalAccessException {
+		// given
+		Member member = MemberFactory.createMember();
+		Member member2 = MemberFactory.anotherMember();
+		memberRepository.save(member);
+		memberRepository.save(member2);
+
+		Challenge c2 = ChallengeFactory.createChallenge();
+		c2.addFavoriteMember(member);
+		ChallengeMember cm2 = new ChallengeMember(c2, member);
+		ChallengeMember cm3 = new ChallengeMember(c2, member2);
+
+		List<Challenge> challengeList = List.of(c2);
+		challengeRepository.saveAll(challengeList);
+		challengeMemberRepository.saveAll(List.of(cm2, cm3));
+
+		clear();
+
+		// when
+		Challenge result = challengeRepository.findByIdWithMembers(c2.getId()).orElseThrow(() -> new DomainException(
+			ChallengeExceptionType.CHALLENGE_NOT_FOUND));
+
+		// then
+		assertEquals(result.getId(), c2.getId());
+		assertEquals(result.getMembers().size(), 2);
+		assertEquals(result.getMembers().get(0).getMember().getProfileImageId(), member.getProfileImageId());
 	}
 
 	private void changePrivateFieldWithReflection(Challenge challenge, String fieldName, Object newValue) throws
