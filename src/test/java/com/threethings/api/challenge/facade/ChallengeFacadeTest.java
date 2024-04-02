@@ -57,8 +57,8 @@ class ChallengeFacadeTest {
 		Member member = MemberFactory.createMember();
 
 		// when
-		given(memberService.findMember(anyLong())).willReturn(member);
-		given(challengeService.findChallenge(anyLong())).willReturn(challenge);
+		given(memberService.findMemberWithFavoriteChallenges(anyLong())).willReturn(member);
+		given(challengeService.findChallengeWithFavoriteMembers(anyLong())).willReturn(challenge);
 		challengeFacade.likeChallenge(1L, requestDto);
 
 		// then
