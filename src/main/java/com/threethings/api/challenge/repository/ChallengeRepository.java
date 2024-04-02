@@ -2,9 +2,11 @@ package com.threethings.api.challenge.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,4 +39,15 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 		ORDER BY c.createdAt DESC LIMIT 10
 		""")
 	List<String> findTitle(@Param("keyword") String keyword);
+
+	@Query(value = """
+		SELECT c FROM Challenge c
+		LEFT JOIN FETCH c.members cm
+		LEFT JOIN FETCH cm.member
+		WHERE c.id = :id AND c.isPublic = true
+		""")
+	Optional<Challenge> findByIdWithMembers(@Param("id") Long id);
+
+	@EntityGraph(attributePaths = {"favoriteMembers"})
+	Optional<Challenge> findChallengeById(Long id);
 }

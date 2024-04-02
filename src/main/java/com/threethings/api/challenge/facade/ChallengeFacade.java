@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.threethings.api.challenge.domain.Challenge;
 import com.threethings.api.challenge.dto.ChallengeCreateRequestDto;
+import com.threethings.api.challenge.dto.ChallengeDetailResponseDto;
 import com.threethings.api.challenge.dto.ChallengeLikeRequestDto;
 import com.threethings.api.challenge.dto.ChallengeSummaryResponseDto;
 import com.threethings.api.challenge.service.ChallengeService;
@@ -41,8 +42,8 @@ public class ChallengeFacade {
 
 	@Transactional
 	public void likeChallenge(Long memberId, ChallengeLikeRequestDto req) {
-		Member member = memberService.findMember(memberId);
-		Challenge challenge = challengeService.findChallenge(req.getChallengeId());
+		Member member = memberService.findMemberWithFavoriteChallenges(memberId);
+		Challenge challenge = challengeService.findChallengeWithFavoriteMembers(req.getChallengeId());
 		if (!req.getLiked()) {
 			challenge.addFavoriteMember(member);
 		} else {
@@ -56,5 +57,10 @@ public class ChallengeFacade {
 
 	public List<String> suggestionChallengeTitle(String keyword) {
 		return challengeService.suggestionTitle(keyword);
+	}
+
+	public ChallengeDetailResponseDto getChallengeDetail(Long id, Long memberId) {
+		Challenge challenge = challengeService.getChallengeDetail(id);
+		return ChallengeDetailResponseDto.toDto(challenge, memberId);
 	}
 }

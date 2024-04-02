@@ -25,4 +25,9 @@ public class MemberService {
 		return memberRepository.findById(memberId)
 			.orElseThrow(() -> new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
 	}
+
+	public Member findMemberWithFavoriteChallenges(Long memberId) {
+		return memberRepository.findMemberById(memberId)
+			.orElseThrow(() -> new DomainException(MemberExceptionType.MEMBER_NOT_FOUND));
+	}
 }

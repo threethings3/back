@@ -31,6 +31,11 @@ public class ChallengeService {
 			.orElseThrow(() -> new DomainException(ChallengeExceptionType.CHALLENGE_NOT_FOUND));
 	}
 
+	public Challenge findChallengeWithFavoriteMembers(Long challengeId) {
+		return challengeRepository.findChallengeById(challengeId)
+			.orElseThrow(() -> new DomainException(ChallengeExceptionType.CHALLENGE_NOT_FOUND));
+	}
+
 	public Page<ChallengeSummaryResponseDto> searchChallenge(String keyword, Long memberId, Pageable pageable) {
 		return challengeRepository.findByKeywordAndEndDateAfterAndIsPublicTrueWithMembers(
 			keyword, memberId, LocalDate.now(), pageable);
@@ -38,5 +43,10 @@ public class ChallengeService {
 
 	public List<String> suggestionTitle(String keyword) {
 		return challengeRepository.findTitle(keyword);
+	}
+
+	public Challenge getChallengeDetail(Long id) {
+		return challengeRepository.findByIdWithMembers(id)
+			.orElseThrow(() -> new DomainException(ChallengeExceptionType.CHALLENGE_NOT_FOUND));
 	}
 }

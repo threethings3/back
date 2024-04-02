@@ -16,6 +16,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	@EntityGraph(attributePaths = {"roleSet", "favoriteChallengeCategories"})
 	Optional<Member> findBySocialCodeAndProvider(String socialCode, Provider provider);
 
+	@EntityGraph(attributePaths = {"favoriteChallenge"})
+	Optional<Member> findMemberById(Long id);
+
 	boolean existsByNickname(@Param("nickname") String nickname);
 }
 
