@@ -51,10 +51,6 @@ public class Member extends BaseEntity {
 	@Convert(converter = ProviderConverter.class)
 	private Provider provider;
 
-	@ElementCollection(fetch = FetchType.LAZY)
-	@Enumerated(EnumType.STRING)
-	private Set<ChallengeCategory> favoriteChallengeCategories = new HashSet<>();
-
 	private Long profileImageId;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
@@ -69,18 +65,12 @@ public class Member extends BaseEntity {
 		this.nickname = nickname;
 		this.socialCode = socialCode;
 		this.provider = provider;
-		addFavoriteChallengeCategories(favoriteChallengeCategories);
 		this.profileImageId = profileImageId;
 		addRole(MemberRole.ROLE_NORMAL);
 	}
 
 	public void addRole(MemberRole role) {
 		this.roleSet.add(role);
-	}
-
-	public void addFavoriteChallengeCategories(Set<ChallengeCategory> newCategories) {
-		this.favoriteChallengeCategories.clear();
-		this.favoriteChallengeCategories.addAll(newCategories);
 	}
 
 	public void addFavoriteChallenge(Challenge challenge) {

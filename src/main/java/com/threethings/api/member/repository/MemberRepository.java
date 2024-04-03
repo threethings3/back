@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Optional<Member> findByNickname(String nickname);
 
-	@EntityGraph(attributePaths = {"roleSet", "favoriteChallengeCategories"})
+	@EntityGraph(attributePaths = {"roleSet"})
 	Optional<Member> findBySocialCodeAndProvider(String socialCode, Provider provider);
 
 	@EntityGraph(attributePaths = {"favoriteChallenge"})
