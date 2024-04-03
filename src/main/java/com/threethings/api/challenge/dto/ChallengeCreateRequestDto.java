@@ -20,7 +20,7 @@ public class ChallengeCreateRequestDto {
 	private String title;
 	private Goal goal;
 	private CertificationTime certificationTime;
-	private Integer challengePeriodWeeks;
+	private Integer durationWeeks;
 	private List<Integer> cycleDays;
 	private Boolean isPublic;
 	private Integer maxParticipants;
@@ -32,7 +32,7 @@ public class ChallengeCreateRequestDto {
 			.goal(req.getGoal())
 			.certificationTime(req.getCertificationTime())
 			.cycleDays(req.cycleDays)
-			.challengePeriodWeeks(req.getChallengePeriodWeeks())
+			.durationWeeks(req.getDurationWeeks())
 			.isPublic(req.getIsPublic())
 			.maxParticipants(req.maxParticipants)
 			.build();

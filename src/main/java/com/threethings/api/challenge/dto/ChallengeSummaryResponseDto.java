@@ -18,6 +18,7 @@ public class ChallengeSummaryResponseDto {
 	private Long challengeId;
 	private ChallengeProfile challengeProfile;
 	private String title;
+	private Integer durationWeeks;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd", timezone = "Asia/Seoul")
 	private LocalDate beginChallengeDate;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd", timezone = "Asia/Seoul")

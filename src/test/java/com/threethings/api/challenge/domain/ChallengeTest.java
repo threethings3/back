@@ -56,7 +56,7 @@ class ChallengeTest {
 	@ParameterizedTest
 	@DisplayName("챌린지 마치는 시간 구하기")
 	@MethodSource("provideArgumentsForChallengeEndDaysTest")
-	void calculateEndDateTimeTest(LocalDate beginChallenge, int challengePeriodWeeks,
+	void calculateEndDateTimeTest(LocalDate beginChallenge, int durationWeeks,
 		List<DayOfWeek> cycleDays, LocalDate expected) throws Exception {
 		// given, when
 		Challenge challenge = new Challenge();
@@ -64,7 +64,7 @@ class ChallengeTest {
 			LocalDate.class, Integer.TYPE, List.class);
 		method.setAccessible(true);
 
-		LocalDate result = (LocalDate)method.invoke(challenge, beginChallenge, challengePeriodWeeks, cycleDays);
+		LocalDate result = (LocalDate)method.invoke(challenge, beginChallenge, durationWeeks, cycleDays);
 		// then
 		assertEquals(expected, result);
 	}

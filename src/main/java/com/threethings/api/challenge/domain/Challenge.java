@@ -53,7 +53,7 @@ public class Challenge extends BaseEntity {
 
 	@Convert(converter = DaysOfWeekConverter.class)
 	private List<DayOfWeek> cycleDays;
-
+	private Integer durationWeeks;
 	private LocalDate beginChallengeDate;
 	private LocalDate endChallengeDate;
 	private Boolean isPublic;
@@ -69,15 +69,16 @@ public class Challenge extends BaseEntity {
 	@Builder
 	public Challenge(ChallengeProfile challengeProfile, String title, Goal goal,
 		CertificationTime certificationTime,
-		List<Integer> cycleDays, Integer challengePeriodWeeks, Boolean isPublic, Integer maxParticipants) {
+		List<Integer> cycleDays, Integer durationWeeks, Boolean isPublic, Integer maxParticipants) {
 		this.challengeProfile = challengeProfile;
 		this.title = title;
 		this.goal = goal;
 		this.certificationTime = certificationTime;
 		this.cycleDays = getDayOfWeekList(cycleDays);
+		this.durationWeeks = durationWeeks;
 		this.beginChallengeDate = calculateBeginDateTime(this.cycleDays, certificationTime,
 			SystemTimeProvider.getInstance());
-		this.endChallengeDate = calculateEndDateTime(this.beginChallengeDate, challengePeriodWeeks, this.cycleDays);
+		this.endChallengeDate = calculateEndDateTime(this.beginChallengeDate, durationWeeks, this.cycleDays);
 		this.isPublic = isPublic;
 		this.maxParticipants = maxParticipants;
 	}
@@ -103,12 +104,12 @@ public class Challenge extends BaseEntity {
 		return today.with(TemporalAdjusters.next(cycleDays.get(0)));
 	}
 
-	private LocalDate calculateEndDateTime(LocalDate beginChallenge, int challengePeriodWeeks,
+	private LocalDate calculateEndDateTime(LocalDate beginChallenge, int durationWeeks,
 		List<DayOfWeek> cycleDays) {
 		int beginIndex = cycleDays.indexOf(beginChallenge.getDayOfWeek());
 		int endIndex = (beginIndex - 1 + cycleDays.size()) % cycleDays.size();
 		return beginChallenge.with(TemporalAdjusters.next(cycleDays.get(endIndex)))
-			.plusWeeks(challengePeriodWeeks - 1);
+			.plusWeeks(durationWeeks - 1);
 	}
 
 	private List<DayOfWeek> getDayOfWeekList(List<Integer> values) {

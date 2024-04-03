@@ -22,6 +22,7 @@ public class ChallengeDetailResponseDto {
 	private ChallengeProfile challengeProfile;
 	private String title;
 	private Goal goal;
+	private Integer durationWeeks;
 	private LocalDate beginChallengeDate;
 	private LocalDate endChallengeDate;
 	private List<Integer> cycleDays;
@@ -38,6 +39,7 @@ public class ChallengeDetailResponseDto {
 		this.challengeProfile = challenge.getChallengeProfile();
 		this.title = challenge.getTitle();
 		this.goal = challenge.getGoal();
+		this.durationWeeks = challenge.getDurationWeeks();
 		this.beginChallengeDate = challenge.getBeginChallengeDate();
 		this.endChallengeDate = challenge.getEndChallengeDate();
 		this.cycleDays = convertDayOfWeekToInteger(challenge.getCycleDays());

@@ -39,7 +39,7 @@ public class ChallengeTestInitDB {
 			.goal(new Goal("하루 세 끼 다 먹기", "하루 두 끼 다 먹기", "하루 한 끼 다 먹기"))
 			.certificationTime(new CertificationTime(LocalTime.of(8, 0), LocalTime.of(22, 0)))
 			.cycleDays(List.of(1, 2, 3, 4, 5, 6, 7))
-			.challengePeriodWeeks(4)
+			.durationWeeks(4)
 			.isPublic(Boolean.TRUE)
 			.maxParticipants(30)
 			.build();
@@ -52,7 +52,7 @@ public class ChallengeTestInitDB {
 			.goal(new Goal("3시간 공부하기", "2시간 공부하기", "1시간 공부하기"))
 			.certificationTime(new CertificationTime(LocalTime.of(8, 0), LocalTime.of(22, 0)))
 			.cycleDays(List.of(1, 3, 5, 6, 7))
-			.challengePeriodWeeks(3)
+			.durationWeeks(3)
 			.isPublic(Boolean.TRUE)
 			.maxParticipants(20)
 			.build();
@@ -64,7 +64,7 @@ public class ChallengeTestInitDB {
 			.goal(new Goal("3시간 공부하기", "2시간 공부하기", "1시간 공부하기"))
 			.certificationTime(new CertificationTime(LocalTime.of(8, 0), LocalTime.of(22, 0)))
 			.cycleDays(List.of(1, 3, 5, 6, 7))
-			.challengePeriodWeeks(3)
+			.durationWeeks(3)
 			.isPublic(Boolean.TRUE)
 			.maxParticipants(20)
 			.build();

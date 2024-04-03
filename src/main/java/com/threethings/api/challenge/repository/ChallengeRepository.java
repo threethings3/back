@@ -17,7 +17,8 @@ import com.threethings.api.challenge.dto.ChallengeSummaryResponseDto;
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 	@Query(value = """
 			SELECT new com.threethings.api.challenge.dto.ChallengeSummaryResponseDto(
-				c.id, c.challengeProfile, c.title, c.beginChallengeDate, c.endChallengeDate, c.certificationTime,
+				c.id, c.challengeProfile, c.title,  c.durationWeeks,
+				c.beginChallengeDate, c.endChallengeDate, c.certificationTime,
 				SIZE(c.members),
 			CASE WHEN EXISTS (SELECT 1 FROM c.favoriteMembers fm WHERE fm.id = :memberId) THEN true ELSE false END)
 			FROM  Challenge c
