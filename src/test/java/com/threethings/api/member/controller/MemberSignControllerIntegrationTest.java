@@ -63,9 +63,7 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 						fieldWithPath("provider")
 							.description("link:common/Provider.html[OAuth2 리소스 서버,role=\"popup\"]"),
 						fieldWithPath("nickname").description("닉네임"),
-						fieldWithPath("profileImageId").description("프로필 이미지 ID"),
-						fieldWithPath("favoriteChallengeCategories").description("선호 챌린지 카테고리")
-							.description("link:common/ChallengeCategory.html[선호 카테고리,role=\"popup\"]")
+						fieldWithPath("profileImageId").description("프로필 이미지 ID")
 					),
 					responseHeaders(
 						headerWithName(HttpHeaders.LOCATION).description("Location header")
@@ -74,8 +72,6 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 						fieldWithPath("success").description("성공 여부"),
 						fieldWithPath("result.data.memberResponse.profileImageId").description("프로필 ID"),
 						fieldWithPath("result.data.memberResponse.nickname").description("닉네임"),
-						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories")
-							.description("link:common/ChallengeCategory.html[선호 카테고리,role=\"popup\"]"),
 						fieldWithPath("result.data.tokenResponse.accessToken").description("Access token"),
 						fieldWithPath("result.data.tokenResponse.refreshToken").description("Refresh token"))
 				)
@@ -110,8 +106,6 @@ public class MemberSignControllerIntegrationTest extends RestDocsTest {
 						fieldWithPath("success").description("성공 여부"),
 						fieldWithPath("result.data.memberResponse.profileImageId").description("프로필 ID"),
 						fieldWithPath("result.data.memberResponse.nickname").description("닉네임"),
-						fieldWithPath("result.data.memberResponse.favoriteChallengeCategories")
-							.description("link:common/ChallengeCategory.html[선호 카테고리,role=\"popup\"]"),
 						fieldWithPath("result.data.tokenResponse.accessToken").description("Access token"),
 						fieldWithPath("result.data.tokenResponse.refreshToken").description("Refresh token"))
 				)

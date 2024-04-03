@@ -1,14 +1,10 @@
 package com.threethings.api.member.factory.dto;
 
-import java.util.Set;
-
-import com.threethings.api.challenge.domain.ChallengeCategory;
 import com.threethings.api.member.domain.Provider;
 import com.threethings.api.member.dto.SignUpRequest;
 
 public class SignUpRequestFactory {
 	public static SignUpRequest createSignUpRequest() {
-		return new SignUpRequest("12345678", Provider.NAVER, "닉네임", 1L,
-			Set.of(ChallengeCategory.EXERCISE, ChallengeCategory.GROWTH));
+		return new SignUpRequest("12345678", Provider.NAVER, "닉네임", 1L);
 	}
 }

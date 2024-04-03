@@ -6,3 +6,22 @@
 
 operation::challenge-controller-integration-test/create-challenge-test[snippets='http-request,request-fields,request-headers,http-response,response-fields']
 
+[[Challenge-좋아요]]
+=== Challenge-좋아요, 좋아요 삭제
+
+operation::challenge-controller-integration-test/like-challenge-test[snippets='http-request,request-fields,request-headers,http-response,response-fields']
+
+[[Challenge-검색]]
+=== Challenge-검색
+
+operation::challenge-controller-integration-test/search-challenge-test[snippets='http-request,query-parameters,request-headers,http-response,response-fields']
+
+[[Challenge-자동완성]]
+=== Challenge-자동 완성
+
+operation::challenge-controller-integration-test/get-challenge-title-test[snippets='http-request,query-parameters,request-headers,http-response,response-fields']
+
+[[Challenge-상세조회]]
+=== Challenge-상세 조회
+
+operation::challenge-controller-integration-test/get-challenge-detail-test[snippets='http-request,path-parameters,request-headers,http-response,response-fields']

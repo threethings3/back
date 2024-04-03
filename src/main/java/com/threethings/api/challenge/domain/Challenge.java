@@ -5,11 +5,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.threethings.api.challenge.converter.DaysOfWeekConverter;
 import com.threethings.api.challengemember.domain.ChallengeMember;
 import com.threethings.api.global.common.BaseEntity;
+import com.threethings.api.member.domain.Member;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
@@ -18,6 +21,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -47,7 +53,7 @@ public class Challenge extends BaseEntity {
 
 	@Convert(converter = DaysOfWeekConverter.class)
 	private List<DayOfWeek> cycleDays;
-
+	private Integer durationWeeks;
 	private LocalDate beginChallengeDate;
 	private LocalDate endChallengeDate;
 	private Boolean isPublic;
@@ -55,18 +61,24 @@ public class Challenge extends BaseEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "challenge")
 	private List<ChallengeMember> members = new ArrayList<>();
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "favorite_challenges", joinColumns = @JoinColumn(name = "challenge_id"),
+		inverseJoinColumns = @JoinColumn(name = "member_id"))
+	private Set<Member> favoriteMembers = new HashSet<>();
+
 	@Builder
 	public Challenge(ChallengeProfile challengeProfile, String title, Goal goal,
 		CertificationTime certificationTime,
-		List<Integer> cycleDays, Integer challengePeriodWeeks, Boolean isPublic, Integer maxParticipants) {
+		List<Integer> cycleDays, Integer durationWeeks, Boolean isPublic, Integer maxParticipants) {
 		this.challengeProfile = challengeProfile;
 		this.title = title;
 		this.goal = goal;
 		this.certificationTime = certificationTime;
 		this.cycleDays = getDayOfWeekList(cycleDays);
+		this.durationWeeks = durationWeeks;
 		this.beginChallengeDate = calculateBeginDateTime(this.cycleDays, certificationTime,
 			SystemTimeProvider.getInstance());
-		this.endChallengeDate = calculateEndDateTime(this.beginChallengeDate, challengePeriodWeeks, this.cycleDays);
+		this.endChallengeDate = calculateEndDateTime(this.beginChallengeDate, durationWeeks, this.cycleDays);
 		this.isPublic = isPublic;
 		this.maxParticipants = maxParticipants;
 	}
@@ -92,12 +104,12 @@ public class Challenge extends BaseEntity {
 		return today.with(TemporalAdjusters.next(cycleDays.get(0)));
 	}
 
-	private LocalDate calculateEndDateTime(LocalDate beginChallenge, int challengePeriodWeeks,
+	private LocalDate calculateEndDateTime(LocalDate beginChallenge, int durationWeeks,
 		List<DayOfWeek> cycleDays) {
 		int beginIndex = cycleDays.indexOf(beginChallenge.getDayOfWeek());
 		int endIndex = (beginIndex - 1 + cycleDays.size()) % cycleDays.size();
 		return beginChallenge.with(TemporalAdjusters.next(cycleDays.get(endIndex)))
-			.plusWeeks(challengePeriodWeeks - 1);
+			.plusWeeks(durationWeeks - 1);
 	}
 
 	private List<DayOfWeek> getDayOfWeekList(List<Integer> values) {
@@ -109,4 +121,15 @@ public class Challenge extends BaseEntity {
 			members.add(member);
 		}
 	}
+
+	public void addFavoriteMember(Member member) {
+		favoriteMembers.add(member);
+		member.addFavoriteChallenge(this);
+	}
+
+	public void removeFavoriteMember(Member member) {
+		favoriteMembers.remove(member);
+		member.removeFavoriteChallenge(this);
+	}
+
 }
